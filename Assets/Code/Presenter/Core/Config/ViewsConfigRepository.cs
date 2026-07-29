@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Code.UI.Core;
+using Zenject;
 
 namespace Code.Presenter.Core.Config
 {
@@ -8,6 +9,7 @@ namespace Code.Presenter.Core.Config
     {
         private readonly Dictionary<Type, BaseView> _views = new();
         
+        [Inject]
         public ViewsConfigRepository(ViewsConfig config)
         {
             Initialize(config);
@@ -28,11 +30,13 @@ namespace Code.Presenter.Core.Config
             }
         }
 
-        public BaseView GetPrefab(Type viewType)
+        public TView GetPrefab<TView>() where TView : BaseView
         {
+            var viewType = typeof(TView);
+            
             if (_views.TryGetValue(viewType, out var viewPrefab))
             {
-                return viewPrefab;
+                return (TView)viewPrefab;
             }
             
             throw new Exception($"View prefab of type '{viewType.Name}' not registered");

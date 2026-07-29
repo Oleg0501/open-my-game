@@ -1,10 +1,12 @@
 ﻿using Code.UI.Core;
+using Zenject;
 
 namespace Code.Presenter.Core.Interfaces
 {
     public interface IPresenter
     {
-        BaseView View { get; }
+        void CreateView(DiContainer diContainer, BaseView viewPrefab);
+        void DestroyView();
         void Enable();
         void Disable();
     }

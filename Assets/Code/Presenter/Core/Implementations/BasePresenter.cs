@@ -1,17 +1,24 @@
 ﻿using Code.Presenter.Core.Interfaces;
 using Code.UI.Core;
+using UnityEngine;
+using Zenject;
 
 namespace Code.Presenter.Core.Implementations
 {
     public abstract class BasePresenter<TView> : IPresenter where TView : BaseView
     {
-        public BaseView View => TypedView;
+        protected TView View;
 
-        protected readonly TView TypedView;
-
-        protected BasePresenter(TView view)
+        [Inject(Id = "Canvas")] private Canvas _canvas;
+        
+        public void CreateView(DiContainer diContainer, BaseView viewPrefab)
         {
-            TypedView = view;
+            View = diContainer.InstantiatePrefabForComponent<TView>(viewPrefab, _canvas.transform);
+        }
+        
+        public void DestroyView()
+        {
+            Object.Destroy(View.gameObject);
         }
 
         public virtual void Enable()

@@ -1,29 +1,39 @@
 ﻿using Code.Presenter.Core.Implementations;
+using Code.Presenter.Core.Interfaces;
+using Code.Presenter.Game;
 using Code.UI.Menu;
+using Zenject;
 
 namespace Code.Presenter.Menu
 {
     public class MenuPresenter : BasePresenter<MenuView>
     {
-        public MenuPresenter(MenuView view) : base(view)
+        private readonly IPresenterContainer _presenterContainer;
+        
+        [Inject]
+        public MenuPresenter(IPresenterContainer presenterContainer)
         {
-            
+            _presenterContainer = presenterContainer;
         }
 
         public override void Enable()
         {
             base.Enable();
-            TypedView.OnPlayButtonClicked.AddListener(OnPlayButtonClicked);
+            
+            View.OnPlayButtonClicked.AddListener(OnPlayButtonClicked);
         }
 
         public override void Disable()
         {
             base.Disable();
-            TypedView.OnPlayButtonClicked.RemoveListener(OnPlayButtonClicked);
+            
+            View.OnPlayButtonClicked.RemoveListener(OnPlayButtonClicked);
         }
 
         private void OnPlayButtonClicked()
         {
+            _presenterContainer.Enable<GamePresenter>();
+            _presenterContainer.Disable<MenuPresenter>();
         }
     }
 }

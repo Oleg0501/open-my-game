@@ -1,4 +1,17 @@
 {
-	"name": "Code.Presenter",
-	"references":[ "Code.UI" ]
+    "name": "Code.Presenter",
+    "rootNamespace": "",
+    "references": [
+        "Code.UI",
+        "Zenject"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }

@@ -2,22 +2,29 @@
 using System.Collections.Generic;
 using Code.Presenter.Core.Interfaces;
 using Code.UI.Core;
+using Zenject;
 
 namespace Code.Presenter.Core.Implementations
 {
     public class PresenterContainer : IPresenterContainer
     {
+        private readonly DiContainer _diContainer;
         private readonly Dictionary<Type, IPresenter> _presenters = new();
+
+        [Inject]
+        public PresenterContainer(DiContainer diContainer)
+        {
+            _diContainer = diContainer;
+        }
         
         public IPresenter Create<TView, TPresenter>(TView viewPrefab)
             where TView : BaseView 
             where TPresenter : IPresenter
         {
-            var view = UnityEngine.Object.Instantiate(viewPrefab);
-            var viewType = typeof(TView);
-            var presenter = (TPresenter)Activator.CreateInstance(viewType, view);
-
-            _presenters.Add(viewType, presenter);
+            var presenterType = typeof(TPresenter);
+            var presenter = _diContainer.Instantiate<TPresenter>();
+            presenter.CreateView(_diContainer, viewPrefab);
+            _presenters.Add(presenterType, presenter);
             
             return presenter;
         }
@@ -31,7 +38,7 @@ namespace Code.Presenter.Core.Implementations
                 return false;
             }
             
-            UnityEngine.Object.Destroy(presenter.View.gameObject);
+            presenter.DestroyView();
             _presenters.Remove(type);
             
             return true;
