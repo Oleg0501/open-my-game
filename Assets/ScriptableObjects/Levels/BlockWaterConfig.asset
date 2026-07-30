@@ -1,0 +1,15 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a682b6c1a5bc4a51a4e1d962351d64e7, type: 3}
+  m_Name: BlockWaterConfig
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 1669656505754316987, guid: d5a738fd66f3565429e4727d009a7e79, type: 3}
