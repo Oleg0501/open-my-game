@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Code.Logic.LevelBlock;
+
+namespace Code.Scene
+{
+    public class BlockViewsRegistry
+    {
+        private readonly Dictionary<BlockID, BlockView> _views = new();
+        
+        public void Register(BlockID blockID, BlockView view)
+        {
+            _views.Add(blockID, view);
+        }
+        
+        public BlockView GetView(BlockID blockID)
+        {
+            return _views.TryGetValue(blockID, out var view) 
+                ? view 
+                : throw new Exception($"Block view with ID '{blockID}' not registered");
+        }
+
+        public BlockView[] GetViewsAll()
+        {
+            return _views.Values.ToArray();
+        }
+    }
+}

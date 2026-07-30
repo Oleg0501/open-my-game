@@ -14,20 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 4
   _height: 4
-  _blockConfigs:
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9028f8b8883385641a6e1e518be02bb5, type: 2}
-  - {fileID: 11400000, guid: 9028f8b8883385641a6e1e518be02bb5, type: 2}
-  - {fileID: 11400000, guid: 9028f8b8883385641a6e1e518be02bb5, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9028f8b8883385641a6e1e518be02bb5, type: 2}
-  - {fileID: 11400000, guid: 9028f8b8883385641a6e1e518be02bb5, type: 2}
-  - {fileID: 11400000, guid: 9028f8b8883385641a6e1e518be02bb5, type: 2}
-  - {fileID: 11400000, guid: 9028f8b8883385641a6e1e518be02bb5, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
-  - {fileID: 11400000, guid: 9bed4c69a3f3c944cbbe194594517e54, type: 2}
+  _blockIDConfigs:
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+  - {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+  - {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+  - {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+  - {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+  - {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+  - {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Code.UI.Game
 {
-    public class GameView : BaseView
+    public class GameView : UIView
     {
         [SerializeField] private TextMeshProUGUI _levelText;
         [SerializeField] private Button _restartButton;

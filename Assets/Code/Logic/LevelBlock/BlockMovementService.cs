@@ -7,15 +7,18 @@ namespace Code.Logic.LevelBlock
     public class BlockMovementService
     {
         private readonly GridModel _gridModel;
+        private readonly BlockRegistry _blockRegistry;
 
         [Inject]
-        public BlockMovementService(GridModel gridModel)
+        public BlockMovementService(GridModel gridModel, BlockRegistry blockRegistry)
         {
             _gridModel = gridModel;
+            _blockRegistry = blockRegistry;
         }
 
-        public BlockMovementResult Move(Block block, BlockMoveDirection direction)
+        public BlockMovementResult Move(BlockID blockID, BlockMoveDirection direction)
         {
+            var block = _blockRegistry.GetBlock(blockID);
             var fromCell = _gridModel.GetCellOrNull(block.X, block.Y);
 
             var deltaX = 0;

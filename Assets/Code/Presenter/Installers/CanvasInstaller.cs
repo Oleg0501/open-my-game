@@ -9,7 +9,7 @@ namespace Code.Presenter.Installers
 
         public override void InstallBindings()
         {
-            Container.Bind<Canvas>().WithId("Canvas").FromInstance(_canvas).AsSingle();
+            Container.Bind<Canvas>().WithId("Canvas").FromInstance(_canvas).AsSingle().NonLazy();
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Code.Logic.Installers
         
         public override void InstallBindings()
         {
-            Container.Bind<LevelConfig>().FromInstance(_levelConfig).AsSingle();
+            Container.Bind<LevelConfig>().FromInstance(_levelConfig).AsSingle().NonLazy();
         }
     }
 }

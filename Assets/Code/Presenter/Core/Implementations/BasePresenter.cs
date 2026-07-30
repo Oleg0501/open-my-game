@@ -5,13 +5,13 @@ using Zenject;
 
 namespace Code.Presenter.Core.Implementations
 {
-    public abstract class BasePresenter<TView> : IPresenter where TView : BaseView
+    public abstract class BasePresenter<TView> : IPresenter where TView : UIView
     {
         protected TView View;
 
         [Inject(Id = "Canvas")] private Canvas _canvas;
         
-        public void CreateView(DiContainer diContainer, BaseView viewPrefab)
+        public void CreateView(DiContainer diContainer, UIView viewPrefab)
         {
             View = diContainer.InstantiatePrefabForComponent<TView>(viewPrefab, _canvas.transform);
         }

@@ -2,7 +2,7 @@
 
 namespace Code.UI.Core
 {
-    public abstract class BaseView : MonoBehaviour
+    public abstract class UIView : MonoBehaviour
     {
         public virtual void Enable()
         {

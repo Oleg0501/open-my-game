@@ -7,7 +7,7 @@ namespace Code.Presenter.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<PresenterContainer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<PresenterContainer>().AsSingle().NonLazy();
         }
     }
 }

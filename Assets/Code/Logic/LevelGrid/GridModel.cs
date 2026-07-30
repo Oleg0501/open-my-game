@@ -1,25 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Code.Logic.LevelBlock;
 using UnityEngine;
+using Zenject;
 
 namespace Code.Logic.LevelGrid
 {
     public class GridModel
     {
+        private readonly BlockIDGenerator _blockIDGenerator;
+        private readonly BlockRegistry _blockRegistry;
+        public EventHandler<Dictionary<Vector2Int, GridCell>> OnGenerated =  delegate { };
         public Dictionary<Vector2Int, GridCell> Cells { get; } = new();
 
-        public void GenerateLevel(GridConfig gridConfig)
+        [Inject]
+        public GridModel(BlockIDGenerator blockIDGenerator, BlockRegistry blockRegistry)
+        {
+            _blockIDGenerator = blockIDGenerator;
+            _blockRegistry = blockRegistry;
+        }
+        
+        public void Generate(GridConfig gridConfig)
         {
             Cells.Clear();
+            _blockRegistry.Clear();
+            _blockIDGenerator.Reset();
             
-            var blockConfigs = gridConfig.BlockConfigs;
+            var blockConfigs = gridConfig.BlockIDConfigs;
             var blockConfigIndex = 0;
             
             for (var i = 0; i < gridConfig.Width; i++)
             {
                 for (var j = 0; j < gridConfig.Height; j++)
                 {
-                    var block = new Block(i, j, blockConfigs[blockConfigIndex]);
+                    var blockId = new BlockID(_blockIDGenerator.Next());
+                    var blockConfigId = blockConfigs[blockConfigIndex];
+                    var block = new Block(blockId, blockConfigId, i, j);
+                    _blockRegistry.Register(blockId, block);
+                    
                     var cell = new GridCell(i, j, block);
                     blockConfigIndex++;
                     
@@ -27,6 +45,8 @@ namespace Code.Logic.LevelGrid
                     Cells.Add(position, cell);
                 }
             }
+            
+            OnGenerated?.Invoke(this, Cells);
         }
         
         public GridCell GetCellOrNull(int x,int y)

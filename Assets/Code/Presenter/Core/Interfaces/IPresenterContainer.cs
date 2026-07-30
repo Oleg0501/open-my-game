@@ -5,7 +5,7 @@ namespace Code.Presenter.Core.Interfaces
     public interface IPresenterContainer
     {
         public IPresenter Create<TView, TPresenter>(TView view) 
-            where TView : BaseView 
+            where TView : UIView 
             where TPresenter : IPresenter;
         
         public bool Destroy<TPresenter>() where TPresenter : IPresenter;

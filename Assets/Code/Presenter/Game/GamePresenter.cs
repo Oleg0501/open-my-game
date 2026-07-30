@@ -1,5 +1,4 @@
-﻿using Code.Logic;
-using Code.Logic.LevelBlock;
+﻿using Code.Logic.LevelGrid;
 using Code.Presenter.Core.Implementations;
 using Code.UI.Game;
 using Zenject;
@@ -8,19 +7,21 @@ namespace Code.Presenter.Game
 {
     public class GamePresenter : BasePresenter<GameView>
     {
-        private readonly BlockGenerator _blockGenerator;
+        private readonly GridModel _gridModel;
+        private readonly LevelModel _levelModel;
 
         [Inject]
-        public GamePresenter(BlockGenerator blockGenerator)
+        public GamePresenter(GridModel gridModel, LevelModel levelModel)
         {
-            _blockGenerator = blockGenerator;
+            _gridModel = gridModel;
+            _levelModel = levelModel;
         }
         
         public override void Enable()
         {
             base.Enable();
             
-            _blockGenerator.StartNextLevel();
+            _gridModel.Generate(_levelModel.NextLevelConfig());
             
             View.OnRestartButtonClicked.AddListener(OnRestartButtonClicked);
             View.OnNextButtonClicked.AddListener(OnNextButtonClicked);
@@ -37,12 +38,12 @@ namespace Code.Presenter.Game
 
         private void OnRestartButtonClicked()
         {
-            _blockGenerator.RestartCurrentLevel();
+            _gridModel.Generate(_levelModel.CurrentGridConfig);
         }
         
         private void OnNextButtonClicked()
         {
-            _blockGenerator.StartNextLevel();
+            _gridModel.Generate(_levelModel.NextLevelConfig());
         }
     }
 }

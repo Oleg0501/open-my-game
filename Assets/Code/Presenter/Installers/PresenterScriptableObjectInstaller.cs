@@ -7,12 +7,12 @@ namespace Code.Presenter.Installers
     [CreateAssetMenu(fileName = "PresenterScriptableObjectInstaller", menuName = "Installers/PresenterScriptableObjectInstaller")]
     public class PresenterScriptableObjectInstaller : ScriptableObjectInstaller
     {
-        [SerializeField] private ViewsConfig _viewsConfig;
+        [SerializeField] private UIViewsConfig uiViewsConfig;
 
         public override void InstallBindings()
         {
-            Container.Bind<ViewsConfig>().FromInstance(_viewsConfig).AsSingle();
-            Container.Bind<ViewsConfigRepository>().AsSingle();
+            Container.Bind<UIViewsConfig>().FromInstance(uiViewsConfig).AsSingle().NonLazy();
+            Container.Bind<ViewsConfigRepository>().AsSingle().NonLazy();
         }
     }
 }

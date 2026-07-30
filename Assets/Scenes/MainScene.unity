@@ -279,6 +279,7 @@ GameObject:
   - component: {fileID: 519420032}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -360,6 +361,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56666c5a40171f54783dd416a44f42bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_MaxRayIntersections: 0
 --- !u!1 &549121928
 GameObject:
   m_ObjectHideFlags: 0
@@ -447,6 +464,7 @@ GameObject:
   - component: {fileID: 1065159763}
   - component: {fileID: 1065159767}
   - component: {fileID: 1065159765}
+  - component: {fileID: 1065159768}
   - component: {fileID: 1065159766}
   m_Layer: 0
   m_Name: SceneContext
@@ -470,9 +488,11 @@ MonoBehaviour:
   _scriptableObjectInstallers:
   - {fileID: 11400000, guid: cc92f10df06e1bb4ba6a7d4b5c31a5df, type: 2}
   - {fileID: 11400000, guid: e71e26433dbb00e4b98da2997df57518, type: 2}
+  - {fileID: 11400000, guid: 33a0f566f8fd9f849b409e17637d55d3, type: 2}
   _monoInstallers:
   - {fileID: 1065159767}
   - {fileID: 1065159765}
+  - {fileID: 1065159768}
   - {fileID: 1065159766}
   _installerPrefabs: []
   _autoRun: 1
@@ -541,6 +561,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa834b686114bc49d429003bb1f03c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1065159768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065159762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639f7c5e6822453092bcc326dd2141aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1945799360

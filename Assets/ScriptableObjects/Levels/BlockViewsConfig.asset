@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bdaf25cc5ca47af85386d81298b01f7, type: 3}
+  m_Name: BlockViewsConfig
+  m_EditorClassIdentifier: 
+  _levelFieldPrefab: {fileID: 1567466642258344803, guid: 1718d5f3adcee9f49b96bee0e16135af, type: 3}
+  _viewConfigs:
+  - _idConfig: {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
+    _viewPrefab: {fileID: 8861714567125070106, guid: c33a5d5e02337804fac2ef3fb1e4a887, type: 3}
+  - _idConfig: {fileID: 11400000, guid: 14c5934dcc4cee54f9c02396821b3ede, type: 2}
+    _viewPrefab: {fileID: 5268743647836493334, guid: d5a738fd66f3565429e4727d009a7e79, type: 3}

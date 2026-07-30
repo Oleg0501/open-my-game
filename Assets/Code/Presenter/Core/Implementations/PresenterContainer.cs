@@ -18,7 +18,7 @@ namespace Code.Presenter.Core.Implementations
         }
         
         public IPresenter Create<TView, TPresenter>(TView viewPrefab)
-            where TView : BaseView 
+            where TView : UIView 
             where TPresenter : IPresenter
         {
             var presenterType = typeof(TPresenter);

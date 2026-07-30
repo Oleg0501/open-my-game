@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4d7567997ad4148822b54e73d1ce5c9, type: 3}
   m_Name: LevelConfig
   m_EditorClassIdentifier: 
-  _levelFieldPrefab: {fileID: 1567466642258344803, guid: 1718d5f3adcee9f49b96bee0e16135af, type: 3}
   _gridConfigs:
   - {fileID: 11400000, guid: 612f36a91a02fba43a0bb5cd244c482f, type: 2}
-  - {fileID: 11400000, guid: 79a252cb101126f4292cf6e9b5a321c2, type: 2}
-  - {fileID: 11400000, guid: 084cfdbac54742f4cb768210230895a6, type: 2}
+  - {fileID: 11400000, guid: 54934c9dfcef9834f91f5c5127546abf, type: 2}
+  - {fileID: 11400000, guid: e5883eedb8992c84fae6dcb454d1221c, type: 2}

@@ -5,7 +5,7 @@ namespace Code.Presenter.Core.Interfaces
 {
     public interface IPresenter
     {
-        void CreateView(DiContainer diContainer, BaseView viewPrefab);
+        void CreateView(DiContainer diContainer, UIView viewPrefab);
         void DestroyView();
         void Enable();
         void Disable();

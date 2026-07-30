@@ -8,9 +8,11 @@ namespace Code.Logic.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<GridModel>().AsSingle();
-            Container.Bind<LevelModel>().AsSingle();
-            Container.Bind<BlockGenerator>().AsSingle();
+            Container.Bind<GridModel>().AsSingle().NonLazy();
+            Container.Bind<LevelModel>().AsSingle().NonLazy();
+            Container.Bind<BlockIDGenerator>().AsSingle().NonLazy();
+            Container.Bind<BlockMovementService>().AsSingle().NonLazy();
+            Container.Bind<BlockRegistry>().AsSingle().NonLazy();
         }
     }
 }
