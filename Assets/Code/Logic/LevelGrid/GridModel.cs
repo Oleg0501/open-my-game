@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using Code.Logic.LevelBlock;
+using UnityEngine;
 
 namespace Code.Logic.LevelGrid
 {
     public class GridModel
     {
-        private readonly Dictionary<int, GridCell> _cells = new();
-        
-        public Dictionary<int, GridCell> Cells => _cells;
-        
+        public Dictionary<Vector2Int, GridCell> Cells { get; } = new();
+
         public void GenerateLevel(GridConfig gridConfig)
         {
-            _cells.Clear();
+            Cells.Clear();
             
             var blockConfigs = gridConfig.BlockConfigs;
             var blockConfigIndex = 0;
@@ -24,9 +23,22 @@ namespace Code.Logic.LevelGrid
                     var cell = new GridCell(i, j, block);
                     blockConfigIndex++;
                     
-                    _cells.Add(blockConfigIndex, cell);
+                    var position = new Vector2Int(i, j);
+                    Cells.Add(position, cell);
                 }
             }
+        }
+        
+        public GridCell GetCellOrNull(int x,int y)
+        {
+            if (Cells.TryGetValue(new Vector2Int(x, y), out var cell))
+            {
+                return cell;
+            }
+            
+            Debug.LogError($"GridModel, grid cell at position {x}, {y} not found");
+            
+            return null;
         }
     }
 }
