@@ -10,21 +10,26 @@ namespace Code.Scene.Implementations
 {
     public class BlockViewCreator : IBlockViewCreator
     {
+        private readonly DiContainer _diContainer;
         private readonly BlockViewsConfig _viewsConfig;
         private readonly BlockViewsConfigRepository _configRepository;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
+        private readonly ISpriteAnimatorsRegistry _spriteAnimatorsRegistry;
         private readonly GridModel _gridModel;
         private readonly IBlockViewSwipeController _blockViewSwipeController;
         
         private Transform _gameFieldTransform;
         
         [Inject]
-        public BlockViewCreator(BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository, 
-            IBlockViewsRegistry blockViewsRegistry, GridModel gridModel, IBlockViewSwipeController blockViewSwipeController)
+        public BlockViewCreator(DiContainer diContainer, BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository, 
+            IBlockViewsRegistry blockViewsRegistry, ISpriteAnimatorsRegistry spriteAnimatorsRegistry, GridModel gridModel, 
+            IBlockViewSwipeController blockViewSwipeController)
         {
+            _diContainer = diContainer;
             _viewsConfig = viewsConfig;
             _configRepository = configRepository;
             _blockViewsRegistry = blockViewsRegistry;
+            _spriteAnimatorsRegistry = spriteAnimatorsRegistry;
             _gridModel = gridModel;
             _blockViewSwipeController = blockViewSwipeController;
 
@@ -38,12 +43,16 @@ namespace Code.Scene.Implementations
                 var gameField = Object.Instantiate(_viewsConfig.LevelFieldPrefab);
                 _gameFieldTransform = gameField.transform;
             }
+
+            var blockViewsOld = _blockViewsRegistry.GetViewsAll();
             
-            for (var i = 0; i < _gameFieldTransform.childCount; i++)
+            foreach (var blockView in blockViewsOld)
             {
-                var childTransform = _gameFieldTransform.GetChild(i);
-                Object.Destroy(childTransform.gameObject);
+                _spriteAnimatorsRegistry.Unregister(blockView.ID);
+                Object.Destroy(blockView.gameObject);
             }
+            
+            _blockViewsRegistry.Clear();
             
             var cells = _gridModel.Cells.Values.ToArray();
 
@@ -55,9 +64,8 @@ namespace Code.Scene.Implementations
             var maxX = cells.Max(c => c.X);
             var maxY = cells.Max(c => c.Y);
 
-            var offset = new Vector2(maxX * 0.5f, maxY * 0.5f);
+            var offset = new Vector3(maxX * 0.5f, maxY * 0.5f);
             
-            _blockViewsRegistry.Clear();
             _blockViewSwipeController.UnsubscribeFromAllBlockSwipes();
             
             foreach (var cell in cells)
@@ -68,12 +76,15 @@ namespace Code.Scene.Implementations
                 }
                 
                 var block = cell.Block;
-                var blockPosition = new Vector2(cell.X, cell.Y) - offset;
+                var blockPosition = new Vector3(cell.X, cell.Y) - offset;
                 var blockViewConfig = _configRepository.Get(block.ConfigID.ID);
-                var blockView = Object.Instantiate(blockViewConfig.ViewPrefab, blockPosition, Quaternion.identity, _gameFieldTransform);
+                var blockView = _diContainer.InstantiatePrefabForComponent<BlockView>(blockViewConfig.ViewPrefab, 
+                    blockPosition, Quaternion.identity, _gameFieldTransform);
                 blockView.Initialize(block.ID.Value);
-                
                 _blockViewsRegistry.Register(block.ID, blockView);
+                _spriteAnimatorsRegistry.Register(block.ID.Value, blockView.SpriteAnimator);
+                
+                blockView.SpriteAnimator.Play(blockViewConfig.AnimationsesConfig.IdleAnimationConfig);
                 _blockViewSwipeController.BindToBlockSwipeDetection(blockView);
             }
         }

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64bc687e1b9d47d7a3ab87c17f693770, type: 3}
+  m_Name: FireBlockAnimationsConfig
+  m_EditorClassIdentifier: 
+  _idleAnimationConfig:
+    _fps: 8
+    _isLoop: 1
+    _frames:
+    - {fileID: 21300000, guid: 58c0c5eef7da96b4bba91bac52378b50, type: 3}
+    - {fileID: 21300000, guid: 2155b80e3bb200d49b25b700d5bfdfec, type: 3}
+    - {fileID: 21300000, guid: 39f37818fdf4c764c98d92a3aeb14b0c, type: 3}
+    - {fileID: 21300000, guid: 858781acbd8a9c048905777ead873db0, type: 3}
+    - {fileID: 21300000, guid: d57ddf044e2a6714c80bdd4707d123b9, type: 3}
+    - {fileID: 21300000, guid: 03f2e3e10ed529c4496a8c12afbde12c, type: 3}
+    - {fileID: 21300000, guid: d89953f266122994c9b25a2e9d60a10a, type: 3}
+    - {fileID: 21300000, guid: 8b4510c2488f42e4a9bdda3cf70e71ad, type: 3}
+    - {fileID: 21300000, guid: 143dd132e7a4e0847a47c4499e39eccd, type: 3}
+    - {fileID: 21300000, guid: 0afd07f2da403ab4792bd76593fbaa8d, type: 3}
+    - {fileID: 21300000, guid: 1410886e85484fa419afd8702c45659f, type: 3}
+    - {fileID: 21300000, guid: b781421645393794d87138d144b18881, type: 3}
+    - {fileID: 21300000, guid: ef9005923bf2bdc46b2116cf6324b7b1, type: 3}
+    - {fileID: 21300000, guid: 5e189e7ff4829a141986b7c4d140fcc1, type: 3}
+    - {fileID: 21300000, guid: 4a43781610a909b48ae45e5113e816a2, type: 3}
+    - {fileID: 21300000, guid: e944d50bcb611404598c154e1f5ae99d, type: 3}
+    - {fileID: 21300000, guid: 53aacd6ca74cdc046aca119a13cd9d9a, type: 3}
+    - {fileID: 21300000, guid: 3443922454da68d4e86a4b04266bf81f, type: 3}
+    - {fileID: 21300000, guid: 86476f4698501d54fbb05b02b3537b7a, type: 3}
+    - {fileID: 21300000, guid: 2e5c370ca1b0ef34e8d36aa29972fb72, type: 3}
+    - {fileID: 21300000, guid: 62ed30cc891339c4a9d5b7336bca346f, type: 3}
+    - {fileID: 21300000, guid: e63b4241e1b6e044fa52f866e4bda19f, type: 3}
+  _destroyAnimationConfig:
+    _fps: 30
+    _isLoop: 0
+    _frames:
+    - {fileID: 21300000, guid: 48d5117035c92384782c4da1a60c0b8b, type: 3}
+    - {fileID: 21300000, guid: 1dee940ccb03a13449eff90e6eddb529, type: 3}
+    - {fileID: 21300000, guid: 141d5e3a0b1d6f04dbaf444c3cf3d231, type: 3}
+    - {fileID: 21300000, guid: 80d4cb1d732788c47af8ca0e123b39bb, type: 3}
+    - {fileID: 21300000, guid: 5edd93377b349a54c8d4fe87e70e8ea8, type: 3}
+    - {fileID: 21300000, guid: c62d34bb45e45a040a4a0455d43f5d68, type: 3}
+    - {fileID: 21300000, guid: dd187091741c1964e96143443ce1f7a5, type: 3}
+    - {fileID: 21300000, guid: 072bd0a3c25fe9546a7a7898fdd28ab6, type: 3}
+    - {fileID: 21300000, guid: aa3811aa018cbb841b33071c46a16351, type: 3}
+    - {fileID: 21300000, guid: 9b2a3bb7ce0edd54bb2ade8ce93e9276, type: 3}
+    - {fileID: 21300000, guid: 115cd3278930b924abaa94af84e64d8d, type: 3}
+    - {fileID: 21300000, guid: 6d77127660249fc4ca3d5ef7fa5a5b06, type: 3}
+    - {fileID: 21300000, guid: 26d33146f02c6c44c91fc625bf77b886, type: 3}
+    - {fileID: 21300000, guid: 902a9c82e9e57b5479f0d18bc4c6e4c6, type: 3}
+    - {fileID: 21300000, guid: 7235bcb04b94914478436eca6e9660ca, type: 3}
+    - {fileID: 21300000, guid: 7c32005c24273f94db400ffe901d9757, type: 3}
+    - {fileID: 21300000, guid: ea8726a4192e8694fae930da50204c41, type: 3}
