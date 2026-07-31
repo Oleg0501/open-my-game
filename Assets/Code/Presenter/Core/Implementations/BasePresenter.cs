@@ -1,4 +1,4 @@
-﻿using Code.Presenter.Core.Interfaces;
+﻿using Code.Presenter.Core.Contracts;
 using Code.UI.Core;
 using UnityEngine;
 using Zenject;

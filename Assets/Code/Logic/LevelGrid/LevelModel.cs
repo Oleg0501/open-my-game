@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Code.Logic.LevelGrid.Config;
+using Zenject;
 
 namespace Code.Logic.LevelGrid
 {

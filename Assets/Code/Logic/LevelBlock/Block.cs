@@ -1,4 +1,5 @@
 ﻿using System;
+using Code.Logic.LevelBlock.Config;
 
 namespace Code.Logic.LevelBlock
 {

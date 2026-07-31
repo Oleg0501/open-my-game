@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Code.Logic.LevelBlock.Contracts;
 
-namespace Code.Logic.LevelBlock
+namespace Code.Logic.LevelBlock.Implementations
 {
-    public class BlockRegistry
+    public class BlockRegistry : IBlockRegistry
     {
         private readonly Dictionary<BlockID, Block> _blocks = new();
         

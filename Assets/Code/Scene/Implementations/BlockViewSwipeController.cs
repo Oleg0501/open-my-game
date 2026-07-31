@@ -1,19 +1,22 @@
 ﻿using System.Linq;
 using Code.Logic.LevelBlock;
+using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid;
+using Code.Scene.Contracts;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Scene
+namespace Code.Scene.Implementations
 {
-    public class InputSwipeController
+    public class BlockViewSwipeController : IBlockViewSwipeController
     {
         private readonly GridModel _gridModel;
-        private readonly BlockMovementService _blockMovementService;
-        private readonly BlockViewsRegistry _blockViewsRegistry;
+        private readonly IBlockMovementService _blockMovementService;
+        private readonly IBlockViewsRegistry _blockViewsRegistry;
         
         [Inject]
-        public InputSwipeController(GridModel gridModel, BlockMovementService blockMovementService, BlockViewsRegistry blockViewsRegistry)
+        public BlockViewSwipeController(GridModel gridModel, IBlockMovementService blockMovementService, 
+            IBlockViewsRegistry blockViewsRegistry)
         {
             _gridModel = gridModel;
             _blockMovementService = blockMovementService;
@@ -26,7 +29,7 @@ namespace Code.Scene
             blockView.OnSwiped.AddListener(OnSwiped);
         }
 
-        public void UnsubscribeFromAllSwipedDetectors()
+        public void UnsubscribeFromAllBlockSwipes()
         {
             var blockViews = _blockViewsRegistry.GetViewsAll();
             
@@ -38,7 +41,7 @@ namespace Code.Scene
 
         private void OnSwiped(int id, Vector2 swipeDirection)
         {
-            var movementDirection = SwipeDirectionHelper.GetNormalizedDirection(swipeDirection);
+            var movementDirection = BlockMovementDirectionHelper.GetNormalizedDirection(swipeDirection);
             var blockMovementResult = _blockMovementService.Move(new BlockID(id), movementDirection);
 
             var firstBlockView = _blockViewsRegistry.GetView(blockMovementResult.FirstBlock.ID);

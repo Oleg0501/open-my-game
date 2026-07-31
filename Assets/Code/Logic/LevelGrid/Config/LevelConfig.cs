@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Code.Logic.LevelGrid.Config;
+using UnityEngine;
 
 namespace Code.Logic.LevelGrid
 {

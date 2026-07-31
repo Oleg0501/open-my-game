@@ -1,5 +1,5 @@
-﻿using Code.Presenter.Core.Implementations;
-using Code.Presenter.Core.Interfaces;
+﻿using Code.Presenter.Core.Contracts;
+using Code.Presenter.Core.Implementations;
 using Code.Presenter.Game;
 using Code.UI.Menu;
 using Zenject;

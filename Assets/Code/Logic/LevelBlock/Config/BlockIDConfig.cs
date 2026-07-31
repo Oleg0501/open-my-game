@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Code.Logic.LevelBlock
+namespace Code.Logic.LevelBlock.Config
 {
     [CreateAssetMenu(menuName = "Logic/Block ID Config", fileName = "BlockIDConfig")]
     public class BlockIDConfig : ScriptableObject

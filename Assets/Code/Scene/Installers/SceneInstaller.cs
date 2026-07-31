@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Code.Scene.Implementations;
+using Zenject;
 
 namespace Code.Scene.Installers
 {
@@ -6,9 +7,9 @@ namespace Code.Scene.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<BlockViewCreator>().AsSingle().NonLazy();
-            Container.Bind<BlockViewsRegistry>().AsSingle().NonLazy();
-            Container.Bind<InputSwipeController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockViewCreator>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockViewsRegistry>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockViewSwipeController>().AsSingle().NonLazy();
         }
     }
 }

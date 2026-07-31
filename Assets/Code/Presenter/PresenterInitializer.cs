@@ -1,5 +1,5 @@
 ﻿using Code.Presenter.Core.Config;
-using Code.Presenter.Core.Interfaces;
+using Code.Presenter.Core.Contracts;
 using Code.Presenter.Game;
 using Code.Presenter.Menu;
 using Code.UI.Game;
@@ -7,7 +7,7 @@ using Code.UI.Menu;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Presenter.Installers
+namespace Code.Presenter
 {
     public class PresenterInitializer : MonoBehaviour
     {

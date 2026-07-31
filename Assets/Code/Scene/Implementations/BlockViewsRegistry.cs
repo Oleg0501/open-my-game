@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Logic.LevelBlock;
+using Code.Scene.Contracts;
 
-namespace Code.Scene
+namespace Code.Scene.Implementations
 {
-    public class BlockViewsRegistry
+    public class BlockViewsRegistry : IBlockViewsRegistry
     {
         private readonly Dictionary<BlockID, BlockView> _views = new();
         
@@ -13,7 +14,12 @@ namespace Code.Scene
         {
             _views.Add(blockID, view);
         }
-        
+
+        public void Clear()
+        {
+            _views.Clear();
+        }
+
         public BlockView GetView(BlockID blockID)
         {
             return _views.TryGetValue(blockID, out var view) 

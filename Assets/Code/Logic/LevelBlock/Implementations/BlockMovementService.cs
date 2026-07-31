@@ -1,10 +1,11 @@
 ﻿using System;
+using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid;
 using Zenject;
 
-namespace Code.Logic.LevelBlock
+namespace Code.Logic.LevelBlock.Implementations
 {
-    public class BlockMovementService
+    public class BlockMovementService : IBlockMovementService
     {
         private readonly GridModel _gridModel;
         private readonly BlockRegistry _blockRegistry;
@@ -16,7 +17,7 @@ namespace Code.Logic.LevelBlock
             _blockRegistry = blockRegistry;
         }
 
-        public BlockMovementResult Move(BlockID blockID, BlockMoveDirection direction)
+        public BlockMovementResult Move(BlockID blockID, BlockMovementDirection direction)
         {
             var block = _blockRegistry.GetBlock(blockID);
             var fromCell = _gridModel.GetCellOrNull(block.X, block.Y);
@@ -26,19 +27,19 @@ namespace Code.Logic.LevelBlock
 
             switch (direction)
             {
-                case BlockMoveDirection.Left:
+                case BlockMovementDirection.Left:
                     deltaX = -1;
                     break;
                 
-                case BlockMoveDirection.Right:
+                case BlockMovementDirection.Right:
                     deltaX = 1;
                     break;
                 
-                case BlockMoveDirection.Up:
+                case BlockMovementDirection.Up:
                     deltaY = 1;
                     break;
                 
-                case BlockMoveDirection.Down:
+                case BlockMovementDirection.Down:
                     deltaY = -1;
                     break;
                 

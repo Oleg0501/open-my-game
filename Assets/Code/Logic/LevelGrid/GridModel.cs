@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Code.Logic.LevelBlock;
+using Code.Logic.LevelBlock.Contracts;
+using Code.Logic.LevelBlock.Implementations;
+using Code.Logic.LevelGrid.Config;
 using UnityEngine;
 using Zenject;
 
@@ -8,13 +11,14 @@ namespace Code.Logic.LevelGrid
 {
     public class GridModel
     {
-        private readonly BlockIDGenerator _blockIDGenerator;
-        private readonly BlockRegistry _blockRegistry;
+        private readonly IBlockIDGenerator _blockIDGenerator;
+        private readonly IBlockRegistry _blockRegistry;
+        
         public EventHandler<Dictionary<Vector2Int, GridCell>> OnGenerated =  delegate { };
         public Dictionary<Vector2Int, GridCell> Cells { get; } = new();
 
         [Inject]
-        public GridModel(BlockIDGenerator blockIDGenerator, BlockRegistry blockRegistry)
+        public GridModel(IBlockIDGenerator blockIDGenerator, IBlockRegistry blockRegistry)
         {
             _blockIDGenerator = blockIDGenerator;
             _blockRegistry = blockRegistry;

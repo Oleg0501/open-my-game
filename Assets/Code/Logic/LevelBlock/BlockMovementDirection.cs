@@ -1,6 +1,6 @@
 ﻿namespace Code.Logic.LevelBlock
 {
-    public enum BlockMoveDirection
+    public enum BlockMovementDirection
     {
         Left,
         Right,

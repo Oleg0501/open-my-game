@@ -1,7 +1,7 @@
 ﻿using Code.UI.Core;
 using Zenject;
 
-namespace Code.Presenter.Core.Interfaces
+namespace Code.Presenter.Core.Contracts
 {
     public interface IPresenter
     {

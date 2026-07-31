@@ -1,8 +1,7 @@
-﻿using Code.Logic.LevelGrid;
-using UnityEngine;
+﻿using UnityEngine;
 using Zenject;
 
-namespace Code.Logic.Installers
+namespace Code.Logic.LevelGrid
 {
     [CreateAssetMenu(fileName = "LevelScriptableObjectInstaller", menuName = "Installers/LevelScriptableObjectInstaller")]
     public class LevelScriptableObjectInstaller : ScriptableObjectInstaller

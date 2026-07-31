@@ -2,35 +2,36 @@
 using System.Linq;
 using Code.Logic.LevelGrid;
 using Code.Scene.Config;
+using Code.Scene.Contracts;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Scene
+namespace Code.Scene.Implementations
 {
-    public class BlockViewCreator
+    public class BlockViewCreator : IBlockViewCreator
     {
         private readonly BlockViewsConfig _viewsConfig;
         private readonly BlockViewsConfigRepository _configRepository;
-        private readonly BlockViewsRegistry _blockViewsRegistry;
+        private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly GridModel _gridModel;
-        private readonly InputSwipeController _inputSwipeController;
+        private readonly IBlockViewSwipeController _blockViewSwipeController;
         
         private Transform _gameFieldTransform;
         
         [Inject]
         public BlockViewCreator(BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository, 
-            BlockViewsRegistry blockViewsRegistry, GridModel gridModel, InputSwipeController inputSwipeController)
+            IBlockViewsRegistry blockViewsRegistry, GridModel gridModel, IBlockViewSwipeController blockViewSwipeController)
         {
             _viewsConfig = viewsConfig;
             _configRepository = configRepository;
             _blockViewsRegistry = blockViewsRegistry;
             _gridModel = gridModel;
-            _inputSwipeController = inputSwipeController;
+            _blockViewSwipeController = blockViewSwipeController;
 
-            gridModel.OnGenerated += OnGenerated;
+            gridModel.OnGenerated += OnGridGenerated;
         }
         
-        private void InstantiateBlocks()
+        public void CreateBlockViews()
         {
             if (!_gameFieldTransform)
             {
@@ -56,7 +57,8 @@ namespace Code.Scene
 
             var offset = new Vector2(maxX * 0.5f, maxY * 0.5f);
             
-            _inputSwipeController.UnsubscribeFromAllSwipedDetectors();
+            _blockViewsRegistry.Clear();
+            _blockViewSwipeController.UnsubscribeFromAllBlockSwipes();
             
             foreach (var cell in cells)
             {
@@ -67,13 +69,13 @@ namespace Code.Scene
                 blockView.Initialize(block.ID.Value);
                 
                 _blockViewsRegistry.Register(block.ID, blockView);
-                _inputSwipeController.SubscribeOnBlockSwipe(block.ID);
+                _blockViewSwipeController.SubscribeOnBlockSwipe(block.ID);
             }
         }
         
-        private void OnGenerated(object sender, Dictionary<Vector2Int, GridCell> eventArgs)
+        private void OnGridGenerated(object sender, Dictionary<Vector2Int, GridCell> eventArgs)
         {
-            InstantiateBlocks();
+            CreateBlockViews();
         }
     }
 }
