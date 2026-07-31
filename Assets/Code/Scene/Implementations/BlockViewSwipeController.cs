@@ -42,8 +42,12 @@ namespace Code.Scene.Implementations
         private void OnSwiped(int id, Vector2 swipeDirection)
         {
             var movementDirection = BlockMovementDirectionHelper.GetNormalizedDirection(swipeDirection);
-            var blockMovementResult = _blockMovementService.Move(new BlockID(id), movementDirection);
 
+            if (!_blockMovementService.TryMove(new BlockID(id), movementDirection, out var blockMovementResult))
+            {
+                return;
+            }
+            
             var firstBlockView = _blockViewsRegistry.GetView(blockMovementResult.FirstBlock.ID);
             var secondBlockView = _blockViewsRegistry.GetView(blockMovementResult.SecondBlock.ID);
             

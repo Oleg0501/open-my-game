@@ -55,14 +55,7 @@ namespace Code.Logic.LevelGrid
         
         public GridCell GetCellOrNull(int x,int y)
         {
-            if (Cells.TryGetValue(new Vector2Int(x, y), out var cell))
-            {
-                return cell;
-            }
-            
-            Debug.LogError($"GridModel, grid cell at position {x}, {y} not found");
-            
-            return null;
+            return Cells.GetValueOrDefault(new Vector2Int(x, y));
         }
     }
 }

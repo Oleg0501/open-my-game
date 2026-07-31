@@ -1,7 +1,6 @@
-﻿using Code.Logic.LevelGrid.Config;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Code.Logic.LevelGrid
+namespace Code.Logic.LevelGrid.Config
 {
     [CreateAssetMenu(menuName = "Logic/Level Config", fileName = "LevelConfig")]
     public class LevelConfig : ScriptableObject

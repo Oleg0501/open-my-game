@@ -2,6 +2,6 @@
 {
     public interface IBlockMovementService
     {
-        BlockMovementResult Move(BlockID blockID, BlockMovementDirection direction);
+        bool TryMove(BlockID blockID, BlockMovementDirection direction, out BlockMovementResult blockMovementResult);
     }
 }

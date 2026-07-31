@@ -17,10 +17,17 @@ namespace Code.Logic.LevelBlock.Implementations
             _blockRegistry = blockRegistry;
         }
 
-        public BlockMovementResult Move(BlockID blockID, BlockMovementDirection direction)
+        public bool TryMove(BlockID blockID, BlockMovementDirection direction, out BlockMovementResult blockMovementResult)
         {
+            blockMovementResult = null;
+            
             var block = _blockRegistry.GetBlock(blockID);
             var fromCell = _gridModel.GetCellOrNull(block.X, block.Y);
+
+            if (fromCell == null)
+            {
+                return false;
+            }
 
             var deltaX = 0;
             var deltaY = 0;
@@ -51,10 +58,14 @@ namespace Code.Logic.LevelBlock.Implementations
 
             if (toCell == null)
             {
-                return null;
+                return false;
             }
 
-            return toCell.Block == null ? MoveBlockToEmpty(fromCell, toCell) : SwapBlocks(fromCell, toCell);
+            blockMovementResult = toCell.Block == null 
+                ? MoveBlockToEmpty(fromCell, toCell) 
+                : SwapBlocks(fromCell, toCell);
+            
+            return true;
         }
         
         private BlockMovementResult MoveBlockToEmpty(GridCell fromCell, GridCell toCell)
