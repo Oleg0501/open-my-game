@@ -2,6 +2,7 @@
 using Code.Logic.LevelBlock;
 using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid;
+using Code.Scene.Config;
 using Code.Scene.Contracts;
 using UnityEngine;
 using Zenject;
@@ -10,22 +11,24 @@ namespace Code.Scene.Implementations
 {
     public class BlockViewSwipeController : IBlockViewSwipeController
     {
+        private readonly InputSwipeConfig _inputSwipeConfig;
         private readonly GridModel _gridModel;
         private readonly IBlockMovementService _blockMovementService;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         
         [Inject]
-        public BlockViewSwipeController(GridModel gridModel, IBlockMovementService blockMovementService, 
-            IBlockViewsRegistry blockViewsRegistry)
+        public BlockViewSwipeController(InputSwipeConfig inputSwipeConfig, GridModel gridModel, 
+            IBlockMovementService blockMovementService, IBlockViewsRegistry blockViewsRegistry)
         {
+            _inputSwipeConfig = inputSwipeConfig;
             _gridModel = gridModel;
             _blockMovementService = blockMovementService;
             _blockViewsRegistry = blockViewsRegistry;
         }
 
-        public void SubscribeOnBlockSwipe(BlockID blockID)
+        public void BindToBlockSwipeDetection(BlockView blockView)
         {
-            var blockView = _blockViewsRegistry.GetView(blockID);
+            blockView.InputSwipeDetector.Initialize(_inputSwipeConfig.MinSwipeDetectDistance, _inputSwipeConfig.MaxSwipeDetectDistance);
             blockView.OnSwiped.AddListener(OnSwiped);
         }
 
@@ -52,8 +55,6 @@ namespace Code.Scene.Implementations
             var secondBlockView = blockMovementResult.IsSwap 
                 ? _blockViewsRegistry.GetView(blockMovementResult.SecondBlock.ID) 
                 : null;
-            
-            // var secondBlockView = _blockViewsRegistry.GetView(blockMovementResult.SecondBlock.ID);
             
             var maxX = _gridModel.Cells.Values.ToArray().Max(c => c.X);
             var maxY = _gridModel.Cells.Values.ToArray().Max(c => c.Y);

@@ -6,9 +6,10 @@ namespace Code.Scene
     [RequireComponent(typeof(InputSwipeDetector))]
     public class BlockView : MonoBehaviour
     {
-        public int ID { get; private set; }
         public InputSwipeDetector InputSwipeDetector { get; private set; }
         public UnityEvent<int, Vector2> OnSwiped { get; set; } = new();
+
+        private int _id;
 
         private void Awake()
         {
@@ -18,12 +19,12 @@ namespace Code.Scene
         
         public void Initialize(int id)
         {
-            ID = id;
+            _id = id;
         }
         
         private void OnInputDetectorSwiped(Vector2 eventArgs)
         {
-            OnSwiped?.Invoke(ID, eventArgs);
+            OnSwiped?.Invoke(_id, eventArgs);
         }
     }
 }

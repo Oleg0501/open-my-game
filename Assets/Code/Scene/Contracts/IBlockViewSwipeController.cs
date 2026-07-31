@@ -1,10 +1,8 @@
-﻿using Code.Logic.LevelBlock;
-
-namespace Code.Scene.Contracts
+﻿namespace Code.Scene.Contracts
 {
     public interface IBlockViewSwipeController
     {
-        void SubscribeOnBlockSwipe(BlockID blockID);
+        void BindToBlockSwipeDetection(BlockView blockView);
         void UnsubscribeFromAllBlockSwipes();
     }
 }

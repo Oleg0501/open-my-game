@@ -74,7 +74,7 @@ namespace Code.Scene.Implementations
                 blockView.Initialize(block.ID.Value);
                 
                 _blockViewsRegistry.Register(block.ID, blockView);
-                _blockViewSwipeController.SubscribeOnBlockSwipe(block.ID);
+                _blockViewSwipeController.BindToBlockSwipeDetection(blockView);
             }
         }
         

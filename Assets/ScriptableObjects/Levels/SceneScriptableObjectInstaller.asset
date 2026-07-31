@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c994bcc96542329df29a656256cbcb, type: 3}
   m_Name: SceneScriptableObjectInstaller
   m_EditorClassIdentifier: 
+  _inputSwipeConfig: {fileID: 11400000, guid: 85f05c487f7cd0f42894bb3fd8f3d618, type: 2}
   _blockViewsConfig: {fileID: 11400000, guid: 28cad68ea197e8148918b43092d57c84, type: 2}
