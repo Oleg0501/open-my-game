@@ -24,7 +24,7 @@ namespace Code.Logic.LevelBlock.Implementations
             var block = _blockRegistry.GetBlock(blockID);
             var fromCell = _gridModel.GetCellOrNull(block.X, block.Y);
 
-            if (fromCell == null)
+            if (fromCell == null || fromCell.IsEmpty)
             {
                 return false;
             }
@@ -61,9 +61,12 @@ namespace Code.Logic.LevelBlock.Implementations
                 return false;
             }
 
-            blockMovementResult = toCell.Block == null 
-                ? MoveBlockToEmpty(fromCell, toCell) 
-                : SwapBlocks(fromCell, toCell);
+            if (toCell.IsEmpty && direction == BlockMovementDirection.Up)
+            {
+                return false;
+            }
+
+            blockMovementResult = toCell.IsEmpty ? MoveBlockToEmpty(fromCell, toCell) : SwapBlocks(fromCell, toCell);
             
             return true;
         }

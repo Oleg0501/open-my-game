@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Code.Logic.LevelBlock;
 using Code.Logic.LevelBlock.Contracts;
-using Code.Logic.LevelBlock.Implementations;
 using Code.Logic.LevelGrid.Config;
 using UnityEngine;
 using Zenject;
@@ -30,23 +29,28 @@ namespace Code.Logic.LevelGrid
             _blockRegistry.Clear();
             _blockIDGenerator.Reset();
             
-            var blockConfigs = gridConfig.BlockIDConfigs;
-            var blockConfigIndex = 0;
+            var blockIDConfigs = gridConfig.BlockIDConfigs;
+            var iterationIndex = 0;
             
             for (var i = 0; i < gridConfig.Width; i++)
             {
                 for (var j = 0; j < gridConfig.Height; j++)
                 {
-                    var blockId = new BlockID(_blockIDGenerator.Next());
-                    var blockConfigId = blockConfigs[blockConfigIndex];
-                    var block = new Block(blockId, blockConfigId, i, j);
-                    _blockRegistry.Register(blockId, block);
+                    Block block = null;
+                    var blockIDConfig = blockIDConfigs[iterationIndex];
+
+                    if (blockIDConfig)
+                    {
+                        var blockID = new BlockID(_blockIDGenerator.Next());
+                        block = new Block(blockID, blockIDConfig, i, j);
+                        _blockRegistry.Register(blockID, block);
+                    }
                     
                     var cell = new GridCell(i, j, block);
-                    blockConfigIndex++;
-                    
                     var position = new Vector2Int(i, j);
                     Cells.Add(position, cell);
+                    
+                    iterationIndex++;
                 }
             }
             

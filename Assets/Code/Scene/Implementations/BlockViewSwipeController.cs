@@ -49,7 +49,11 @@ namespace Code.Scene.Implementations
             }
             
             var firstBlockView = _blockViewsRegistry.GetView(blockMovementResult.FirstBlock.ID);
-            var secondBlockView = _blockViewsRegistry.GetView(blockMovementResult.SecondBlock.ID);
+            var secondBlockView = blockMovementResult.IsSwap 
+                ? _blockViewsRegistry.GetView(blockMovementResult.SecondBlock.ID) 
+                : null;
+            
+            // var secondBlockView = _blockViewsRegistry.GetView(blockMovementResult.SecondBlock.ID);
             
             var maxX = _gridModel.Cells.Values.ToArray().Max(c => c.X);
             var maxY = _gridModel.Cells.Values.ToArray().Max(c => c.Y);
@@ -57,7 +61,11 @@ namespace Code.Scene.Implementations
             var offset = new Vector3(maxX * 0.5f, maxY * 0.5f);
             
             firstBlockView.transform.position = new Vector3(blockMovementResult.FirstBlock.X, blockMovementResult.FirstBlock.Y) - offset;
-            secondBlockView.transform.position = new Vector3(blockMovementResult.SecondBlock.X, blockMovementResult.SecondBlock.Y) - offset;
+
+            if (secondBlockView)
+            {
+                secondBlockView.transform.position = new Vector3(blockMovementResult.SecondBlock.X, blockMovementResult.SecondBlock.Y) - offset;
+            }
         }
     }
 }

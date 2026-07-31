@@ -62,6 +62,11 @@ namespace Code.Scene.Implementations
             
             foreach (var cell in cells)
             {
+                if (cell.IsEmpty)
+                {
+                    continue;
+                }
+                
                 var block = cell.Block;
                 var blockPosition = new Vector2(cell.X, cell.Y) - offset;
                 var blockViewConfig = _configRepository.Get(block.ConfigID.ID);
