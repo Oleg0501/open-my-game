@@ -6,12 +6,12 @@ namespace Code.Logic.LevelGrid
     public class LevelModel
     {
         public GridConfig CurrentGridConfig { get; private set; }
+        public int CurrentLevel => _configIndex + 1;
         
         private readonly LevelConfig _levelConfig;
         private readonly int _levelsLength;
+        private int _configIndex = -1;
         
-        private int _currentLevel = -1;
-
         [Inject]
         public LevelModel(LevelConfig levelConfig)
         {
@@ -21,16 +21,16 @@ namespace Code.Logic.LevelGrid
         
         public GridConfig NextLevelConfig()
         {
-            if (_currentLevel >= _levelsLength - 1)
+            if (_configIndex >= _levelsLength - 1)
             {
-                _currentLevel = 0;
+                _configIndex = 0;
             }
             else
             {
-                _currentLevel++;
+                _configIndex++;
             }
             
-            CurrentGridConfig = _levelConfig.GridConfigs[_currentLevel];
+            CurrentGridConfig = _levelConfig.GridConfigs[_configIndex];
             
             return CurrentGridConfig;
         }
