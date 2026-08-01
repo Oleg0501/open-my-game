@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using Code.Scene.Contracts;
+using Code.Scene.SpriteAnimator.Contracts;
 
-namespace Code.Scene.Implementations
+namespace Code.Scene.SpriteAnimator.Implementations
 {
     public class SpriteAnimatorsRegistry : ISpriteAnimatorsRegistry
     {
-        private readonly Dictionary<int, SpriteAnimator> _animators = new();
+        private readonly Dictionary<int, Scene.SpriteAnimator.SpriteAnimator> _animators = new();
         
-        public void Register(int id, SpriteAnimator animator)
+        public void Register(int id, Scene.SpriteAnimator.SpriteAnimator animator)
         {
             _animators.Add(id, animator);
         }

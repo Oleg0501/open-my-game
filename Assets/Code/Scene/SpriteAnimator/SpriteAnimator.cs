@@ -1,7 +1,7 @@
 ﻿using Code.Scene.Config;
 using UnityEngine;
 
-namespace Code.Scene
+namespace Code.Scene.SpriteAnimator
 {
     [RequireComponent(typeof(SpriteRenderer))]
     public class SpriteAnimator : MonoBehaviour

@@ -1,5 +1,7 @@
 ﻿using System;
 using Code.Logic.LevelBlock.Config;
+using Code.Scene.Block;
+using Code.Scene.Block.Config;
 using UnityEngine;
 using UnityEngine.Serialization;
 

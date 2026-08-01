@@ -2,6 +2,7 @@
 using Code.Logic.LevelBlock;
 using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid;
+using Code.Scene.Block;
 using Code.Scene.Config;
 using Code.Scene.Contracts;
 using UnityEngine;

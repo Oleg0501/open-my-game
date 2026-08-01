@@ -5,7 +5,7 @@ using Code.Scene.Config;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Scene
+namespace Code.Scene.Balloon.Implementations
 {
     public class BalloonViewController
     {

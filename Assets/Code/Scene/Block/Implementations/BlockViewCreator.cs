@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Code.Logic.LevelGrid;
+using Code.Scene.Block.Contracts;
 using Code.Scene.Config;
 using Code.Scene.Contracts;
+using Code.Scene.SpriteAnimator.Contracts;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Scene.Implementations
+namespace Code.Scene.Block.Implementations
 {
     public class BlockViewCreator : IBlockViewCreator
     {

@@ -1,8 +1,9 @@
 ﻿using Code.Scene.Contracts;
+using Code.Scene.SpriteAnimator.Contracts;
 using UnityEngine;
 using Zenject;
 
-namespace Code.Scene
+namespace Code.Scene.SpriteAnimator
 {
     public class SpriteAnimatorSystem : MonoBehaviour
     {

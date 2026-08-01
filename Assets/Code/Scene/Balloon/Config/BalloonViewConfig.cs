@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Code.Scene.Config
+namespace Code.Scene.Balloon.Config
 {
     [Serializable]
     public class BalloonViewConfig

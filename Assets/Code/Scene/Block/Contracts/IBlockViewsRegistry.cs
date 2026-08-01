@@ -1,4 +1,5 @@
 ﻿using Code.Logic.LevelBlock;
+using Code.Scene.Block;
 
 namespace Code.Scene.Contracts
 {

@@ -1,18 +1,19 @@
 ﻿using Code.Scene.Contracts;
+using Code.Scene.SpriteAnimator.Contracts;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Code.Scene
+namespace Code.Scene.Block
 {
     [RequireComponent(typeof(InputSwipeDetector))]
     public class BlockView : MonoBehaviour
     {
-        [SerializeField] private SpriteAnimator _spriteAnimator;
+        [SerializeField] private SpriteAnimator.SpriteAnimator _spriteAnimator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
         public int ID { get; private set; }
         public InputSwipeDetector InputSwipeDetector { get; private set; }
-        public SpriteAnimator SpriteAnimator => _spriteAnimator;
+        public SpriteAnimator.SpriteAnimator SpriteAnimator => _spriteAnimator;
         public UnityEvent<int, Vector2> OnSwiped { get; set; } = new();
 
         private ISpriteAnimatorsRegistry _spriteAnimatorsRegistry;

@@ -1,4 +1,6 @@
-﻿namespace Code.Scene.Contracts
+﻿using Code.Scene.Block;
+
+namespace Code.Scene.Contracts
 {
     public interface IBlockViewSwipeController
     {

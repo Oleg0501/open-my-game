@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Logic.LevelBlock;
+using Code.Scene.Block;
 using Code.Scene.Contracts;
 
 namespace Code.Scene.Implementations

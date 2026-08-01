@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Code.Scene.Balloon.Config;
+using UnityEngine;
 
 namespace Code.Scene.Config
 {

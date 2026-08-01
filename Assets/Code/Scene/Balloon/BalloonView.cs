@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 
-namespace Code.Scene
+namespace Code.Scene.Balloon
 {
     public class BalloonView : MonoBehaviour
     {
