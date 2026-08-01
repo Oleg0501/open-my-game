@@ -8,6 +8,7 @@ namespace Code.Scene
     public class BlockView : MonoBehaviour
     {
         [SerializeField] private SpriteAnimator _spriteAnimator;
+        [SerializeField] private SpriteRenderer _spriteRenderer;
 
         public int ID { get; private set; }
         public InputSwipeDetector InputSwipeDetector { get; private set; }
@@ -22,9 +23,15 @@ namespace Code.Scene
             InputSwipeDetector.OnSwiped.AddListener(OnInputDetectorSwiped);
         }
         
-        public void Initialize(int id)
+        public void Initialize(int id, int layer)
         {
             ID = id;
+            SetLayer(layer);
+        }
+
+        public void SetLayer(int layer)
+        {
+            _spriteRenderer.sortingOrder = layer;
         }
         
         private void OnInputDetectorSwiped(Vector2 eventArgs)

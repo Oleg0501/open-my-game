@@ -15,6 +15,7 @@ namespace Code.Scene.Implementations
         private readonly BlockViewsConfigRepository _configRepository;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly ISpriteAnimatorsRegistry _spriteAnimatorsRegistry;
+        private readonly IBlockViewLayerService _blockViewLayerService;
         private readonly GridModel _gridModel;
         private readonly IBlockViewSwipeController _blockViewSwipeController;
         
@@ -22,14 +23,15 @@ namespace Code.Scene.Implementations
         
         [Inject]
         public BlockViewCreator(DiContainer diContainer, BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository, 
-            IBlockViewsRegistry blockViewsRegistry, ISpriteAnimatorsRegistry spriteAnimatorsRegistry, GridModel gridModel, 
-            IBlockViewSwipeController blockViewSwipeController)
+            IBlockViewsRegistry blockViewsRegistry, ISpriteAnimatorsRegistry spriteAnimatorsRegistry, 
+            IBlockViewLayerService blockViewLayerService, GridModel gridModel, IBlockViewSwipeController blockViewSwipeController)
         {
             _diContainer = diContainer;
             _viewsConfig = viewsConfig;
             _configRepository = configRepository;
             _blockViewsRegistry = blockViewsRegistry;
             _spriteAnimatorsRegistry = spriteAnimatorsRegistry;
+            _blockViewLayerService = blockViewLayerService;
             _gridModel = gridModel;
             _blockViewSwipeController = blockViewSwipeController;
 
@@ -80,7 +82,8 @@ namespace Code.Scene.Implementations
                 var blockViewConfig = _configRepository.Get(block.ConfigID);
                 var blockView = _diContainer.InstantiatePrefabForComponent<BlockView>(blockViewConfig.ViewPrefab, 
                     blockPosition, Quaternion.identity, _gameFieldTransform);
-                blockView.Initialize(block.ID.Value);
+                var blockLayer = _blockViewLayerService.GetLayerFromXY(cell.X, cell.Y);
+                blockView.Initialize(block.ID.Value, blockLayer);
                 _blockViewsRegistry.Register(block.ID, blockView);
                 _spriteAnimatorsRegistry.Register(block.ID.Value, blockView.SpriteAnimator);
                 

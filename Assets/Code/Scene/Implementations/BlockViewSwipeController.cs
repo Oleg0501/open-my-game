@@ -15,15 +15,18 @@ namespace Code.Scene.Implementations
         private readonly GridModel _gridModel;
         private readonly IBlockMovementService _blockMovementService;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
-        
+        private readonly IBlockViewLayerService _blockViewLayerService;
+
         [Inject]
         public BlockViewSwipeController(InputSwipeConfig inputSwipeConfig, GridModel gridModel, 
-            IBlockMovementService blockMovementService, IBlockViewsRegistry blockViewsRegistry)
+            IBlockMovementService blockMovementService, IBlockViewsRegistry blockViewsRegistry,
+            IBlockViewLayerService blockViewLayerService)
         {
             _inputSwipeConfig = inputSwipeConfig;
             _gridModel = gridModel;
             _blockMovementService = blockMovementService;
             _blockViewsRegistry = blockViewsRegistry;
+            _blockViewLayerService = blockViewLayerService;
         }
 
         public void BindToBlockSwipeDetection(BlockView blockView)
@@ -60,13 +63,21 @@ namespace Code.Scene.Implementations
             var maxY = _gridModel.Cells.Values.ToArray().Max(c => c.Y);
 
             var offset = new Vector3(maxX * 0.5f, maxY * 0.5f);
-            
-            firstBlockView.transform.position = new Vector3(blockMovementResult.FirstBlock.X, blockMovementResult.FirstBlock.Y) - offset;
 
-            if (secondBlockView)
+            var firstBlockX = blockMovementResult.FirstBlock.X;
+            var firstBlockY = blockMovementResult.FirstBlock.Y;
+            firstBlockView.transform.position = new Vector3(firstBlockX, firstBlockY) - offset;
+            firstBlockView.SetLayer(_blockViewLayerService.GetLayerFromXY(firstBlockX, firstBlockY));
+
+            if (!secondBlockView)
             {
-                secondBlockView.transform.position = new Vector3(blockMovementResult.SecondBlock.X, blockMovementResult.SecondBlock.Y) - offset;
+                return;
             }
+            
+            var secondBlockX = blockMovementResult.SecondBlock.X;
+            var secondBlockY = blockMovementResult.SecondBlock.Y;
+            secondBlockView.transform.position = new Vector3(secondBlockX, secondBlockY) - offset;
+            secondBlockView.SetLayer(_blockViewLayerService.GetLayerFromXY(secondBlockX, secondBlockY));
         }
     }
 }
