@@ -1,5 +1,4 @@
 ﻿using System;
-using Code.Logic.LevelBlock.Config;
 
 namespace Code.Logic.LevelBlock
 {
@@ -7,11 +6,11 @@ namespace Code.Logic.LevelBlock
     public class Block
     {
         public BlockID ID { get; private set; }
-        public BlockIDConfig ConfigID { get; private set; }
+        public string ConfigID { get; private set; }
         public int X { get; set; }
         public int Y { get; set; }
         
-        public Block(BlockID id, BlockIDConfig configId, int x, int y)
+        public Block(BlockID id, string configId, int x, int y)
         {
             ID = id;
             ConfigID = configId;

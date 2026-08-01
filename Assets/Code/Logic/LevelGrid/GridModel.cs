@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Code.Logic.LevelBlock;
 using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid.Config;
+using Code.Logic.Storage.Implementations;
 using UnityEngine;
 using Zenject;
 
 namespace Code.Logic.LevelGrid
 {
-    public class GridModel
+    public class GridModel : BaseJsonStorage<GridData>
     {
         private readonly IBlockIDGenerator _blockIDGenerator;
         private readonly IBlockRegistry _blockRegistry;
+     
+        public override string SaveKey => "GridStorage";
         
         public EventHandler<Dictionary<Vector2Int, GridCell>> OnGenerated =  delegate { };
         public Dictionary<Vector2Int, GridCell> Cells { get; } = new();
@@ -29,7 +33,7 @@ namespace Code.Logic.LevelGrid
             _blockRegistry.Clear();
             _blockIDGenerator.Reset();
             
-            var blockIDConfigs = gridConfig.BlockIDConfigs;
+            var blockConfigIDs = Data?.BlockConfigIDs ?? gridConfig.CachedBlockConfigIDs;
             var iterationIndex = 0;
             
             for (var i = 0; i < gridConfig.Width; i++)
@@ -37,12 +41,12 @@ namespace Code.Logic.LevelGrid
                 for (var j = 0; j < gridConfig.Height; j++)
                 {
                     Block block = null;
-                    var blockIDConfig = blockIDConfigs[iterationIndex];
+                    var blockConfigID = blockConfigIDs[iterationIndex];
 
-                    if (blockIDConfig)
+                    if (!string.IsNullOrEmpty(blockConfigID))
                     {
                         var blockID = new BlockID(_blockIDGenerator.Next());
-                        block = new Block(blockID, blockIDConfig, i, j);
+                        block = new Block(blockID, blockConfigID, i, j);
                         _blockRegistry.Register(blockID, block);
                     }
                     
@@ -55,11 +59,22 @@ namespace Code.Logic.LevelGrid
             }
             
             OnGenerated?.Invoke(this, Cells);
+            
+            if (Data != null)
+            {
+                Data.BlockConfigIDs = null;
+            }
         }
         
         public GridCell GetCellOrNull(int x,int y)
         {
             return Cells.GetValueOrDefault(new Vector2Int(x, y));
+        }
+        
+        public override void Save()
+        {
+            Data.BlockConfigIDs = Cells.Values.Select(cell => !cell.IsEmpty ? cell.Block.ConfigID : "").ToArray();
+            base.Save();
         }
     }
 }

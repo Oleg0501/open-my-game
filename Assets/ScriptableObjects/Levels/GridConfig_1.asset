@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55bd3c3e98aa47fcb10fac231fd3796b, type: 3}
   m_Name: GridConfig_1
   m_EditorClassIdentifier: 
+  _id: grid_config_1
   _width: 4
   _height: 4
   _blockIDConfigs:

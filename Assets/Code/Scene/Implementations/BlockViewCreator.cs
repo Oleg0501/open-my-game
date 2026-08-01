@@ -77,7 +77,7 @@ namespace Code.Scene.Implementations
                 
                 var block = cell.Block;
                 var blockPosition = new Vector3(cell.X, cell.Y) - offset;
-                var blockViewConfig = _configRepository.Get(block.ConfigID.ID);
+                var blockViewConfig = _configRepository.Get(block.ConfigID);
                 var blockView = _diContainer.InstantiatePrefabForComponent<BlockView>(blockViewConfig.ViewPrefab, 
                     blockPosition, Quaternion.identity, _gameFieldTransform);
                 blockView.Initialize(block.ID.Value);

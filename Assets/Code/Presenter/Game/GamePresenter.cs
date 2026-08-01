@@ -23,9 +23,9 @@ namespace Code.Presenter.Game
             
             _gridModel.Generate(_levelModel.NextLevelConfig());
             
+            View.SetLevelText($"Level: {_levelModel.CurrentLevel}");
             View.OnRestartButtonClicked.AddListener(OnRestartButtonClicked);
             View.OnNextButtonClicked.AddListener(OnNextButtonClicked);
-            View.SetLevelText($"Level: {_levelModel.CurrentLevel}");
         }
 
         public override void Disable()
