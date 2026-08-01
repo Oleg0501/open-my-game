@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _inputSwipeConfig: {fileID: 11400000, guid: 85f05c487f7cd0f42894bb3fd8f3d618, type: 2}
   _blockViewsConfig: {fileID: 11400000, guid: 28cad68ea197e8148918b43092d57c84, type: 2}
+  _balloonViewsConfig: {fileID: 11400000, guid: 1715cf07b8dc12a40bd532250f231ce1, type: 2}

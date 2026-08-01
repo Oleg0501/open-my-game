@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32e73158fee546a1ace23059f2e01665, type: 3}
+  m_Name: BalloonViewsConfig
+  m_EditorClassIdentifier: 
+  _sceneRootPrefab: {fileID: 7255397158553853315, guid: 52828a2db93f3ee4eb1e078c51dff770, type: 3}
+  _maxSceneAmount: 2
+  _minSpawnDelay: 1
+  _maxSpawnDelay: 3
+  _viewConfigs:
+  - _balloonViewPrefab: {fileID: 395653720196787607, guid: 39a6acd70e69ff34cafd786da05c5945, type: 3}
+    _horizontalSpeed: 0.1
+    _waveAmplitude: 0.5
+    _waveFrequency: 0.25
+  - _balloonViewPrefab: {fileID: 2412856934900505185, guid: cc29c9da5b51e1d4dafe86002d0e43a1, type: 3}
+    _horizontalSpeed: 0.15
+    _waveAmplitude: 0.25
+    _waveFrequency: 0.5
