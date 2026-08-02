@@ -9,6 +9,7 @@ namespace Code.Logic.LevelBlock.Installers
         {
             Container.BindInterfacesAndSelfTo<BlockIDGenerator>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockMovementService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockGravityService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockRegistry>().AsSingle().NonLazy();
         }
     }

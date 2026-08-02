@@ -4,7 +4,6 @@
     {
         void Register(BlockID blockID, Block block);
         Block GetBlock(BlockID blockID);
-        Block[] GetBlocksAll();
         void Clear();
     }
 }

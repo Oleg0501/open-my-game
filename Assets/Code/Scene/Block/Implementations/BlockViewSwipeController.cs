@@ -14,17 +14,19 @@ namespace Code.Scene.Block.Implementations
         private readonly InputSwipeConfig _inputSwipeConfig;
         private readonly GridModel _gridModel;
         private readonly IBlockMovementService _blockMovementService;
+        private readonly IBlockGravityService _blockGravityService;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly IBlockViewMovementService _blockViewMovementService;
 
         [Inject]
         public BlockViewSwipeController(InputSwipeConfig inputSwipeConfig, GridModel gridModel, 
-            IBlockMovementService blockMovementService, IBlockViewsRegistry blockViewsRegistry, 
+            IBlockMovementService blockMovementService, IBlockGravityService blockGravityService, IBlockViewsRegistry blockViewsRegistry, 
             IBlockViewLayerService blockViewLayerService, IBlockViewMovementService blockViewMovementService)
         {
             _inputSwipeConfig = inputSwipeConfig;
             _gridModel = gridModel;
             _blockMovementService = blockMovementService;
+            _blockGravityService = blockGravityService;
             _blockViewsRegistry = blockViewsRegistry;
             _blockViewMovementService = blockViewMovementService;
         }
@@ -45,17 +47,21 @@ namespace Code.Scene.Block.Implementations
             }
         }
 
-        private void OnSwiped(int id, Vector2 swipeDirection)
+        private async void OnSwiped(int id, Vector2 swipeDirection)
         {
-            var movementResult = new BlockMovementResult();
+            var swipeMovementResult = new BlockMovementResult();
             var movementDirection = BlockMovementDirectionHelper.GetNormalizedDirection(swipeDirection);
             
-            if (!_blockMovementService.TryMove(new BlockID(id), movementDirection, movementResult))
+            if (!_blockMovementService.TryMove(new BlockID(id), movementDirection, swipeMovementResult))
             {
                 return;
             }
             
-            _blockViewMovementService.MoveAsync(movementResult);
+            await _blockViewMovementService.MoveAsync(swipeMovementResult);
+            
+            var gravityMovementResult = new BlockMovementResult();
+            _blockGravityService.ApplyGravity(gravityMovementResult);
+            await _blockViewMovementService.MoveAsync(gravityMovementResult);
         }
     }
 }
