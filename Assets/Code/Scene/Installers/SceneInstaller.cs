@@ -22,6 +22,7 @@ namespace Code.Scene.Installers
             Container.BindInterfacesAndSelfTo<BlockViewLayerService>().AsSingle().NonLazy();
             Container.Bind<BalloonViewController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SpriteAnimatorsRegistry>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockViewViewMovementService>().AsSingle().NonLazy();
             
             Container.Bind<Camera>().WithId("Camera").FromInstance(_camera).AsSingle().NonLazy();
             Container.Bind<Canvas>().WithId("Canvas").FromInstance(_canvas).AsSingle().NonLazy();

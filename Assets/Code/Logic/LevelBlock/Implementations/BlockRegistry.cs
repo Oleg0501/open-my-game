@@ -12,7 +12,7 @@ namespace Code.Logic.LevelBlock.Implementations
         {
             _blocks.Add(blockID, block);
         }
-
+        
         public void Clear()
         {
             _blocks.Clear();

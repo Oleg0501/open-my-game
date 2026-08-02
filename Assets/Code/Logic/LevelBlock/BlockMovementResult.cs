@@ -1,15 +1,15 @@
-﻿using Code.Logic.LevelGrid;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Code.Logic.LevelBlock
 {
     public class BlockMovementResult
     {
-        public GridCell FromCell;
-        public GridCell ToCell;
+        public readonly List<BlockMovementInfo> Moves = new();
 
-        public Block FirstBlock;
-        public Block SecondBlock;
-
-        public bool IsSwap;
+        public void Add(BlockID id, Vector2Int from, Vector2Int to)
+        {
+            Moves.Add(new BlockMovementInfo { BlockID = id, From = from, To = to });
+        }
     }
 }

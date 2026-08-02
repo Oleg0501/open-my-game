@@ -1,6 +1,7 @@
 ﻿using System;
 using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid;
+using UnityEngine;
 using Zenject;
 
 namespace Code.Logic.LevelBlock.Implementations
@@ -8,19 +9,17 @@ namespace Code.Logic.LevelBlock.Implementations
     public class BlockMovementService : IBlockMovementService
     {
         private readonly GridModel _gridModel;
-        private readonly BlockRegistry _blockRegistry;
+        private readonly IBlockRegistry _blockRegistry;
 
         [Inject]
-        public BlockMovementService(GridModel gridModel, BlockRegistry blockRegistry)
+        public BlockMovementService(GridModel gridModel, IBlockRegistry blockRegistry)
         {
             _gridModel = gridModel;
             _blockRegistry = blockRegistry;
         }
 
-        public bool TryMove(BlockID blockID, BlockMovementDirection direction, out BlockMovementResult blockMovementResult)
+        public bool TryMove(BlockID blockID, BlockMovementDirection direction, BlockMovementResult result)
         {
-            blockMovementResult = null;
-            
             var block = _blockRegistry.GetBlock(blockID);
             var fromCell = _gridModel.GetCellOrNull(block.X, block.Y);
 
@@ -61,17 +60,22 @@ namespace Code.Logic.LevelBlock.Implementations
                 return false;
             }
 
-            if (toCell.IsEmpty && direction == BlockMovementDirection.Up)
+            switch (toCell.IsEmpty)
             {
-                return false;
+                case true when direction == BlockMovementDirection.Up:
+                    return false;
+                case true:
+                    MoveBlockToEmpty(fromCell, toCell, result);
+                    break;
+                default:
+                    SwapBlocks(fromCell, toCell, result);
+                    break;
             }
 
-            blockMovementResult = toCell.IsEmpty ? MoveBlockToEmpty(fromCell, toCell) : SwapBlocks(fromCell, toCell);
-            
             return true;
         }
         
-        private BlockMovementResult MoveBlockToEmpty(GridCell fromCell, GridCell toCell)
+        private void MoveBlockToEmpty(GridCell fromCell, GridCell toCell, BlockMovementResult result)
         {
             var block = fromCell.Block;
 
@@ -80,11 +84,11 @@ namespace Code.Logic.LevelBlock.Implementations
 
             block.X = toCell.X;
             block.Y = toCell.Y;
-
-            return new BlockMovementResult { FromCell = fromCell, ToCell = toCell, FirstBlock = block, IsSwap = false };
+            
+            result.Add(block.ID, new Vector2Int(fromCell.X, fromCell.Y), new Vector2Int(toCell.X, toCell.Y));
         }
         
-        private BlockMovementResult SwapBlocks(GridCell fromCell, GridCell toCell)
+        private void SwapBlocks(GridCell fromCell, GridCell toCell, BlockMovementResult result)
         {
             var firstBlock = fromCell.Block;
             var secondBlock = toCell.Block;
@@ -92,9 +96,9 @@ namespace Code.Logic.LevelBlock.Implementations
             (fromCell.Block, toCell.Block) = (toCell.Block, fromCell.Block);
             (firstBlock.X, secondBlock.X) = (secondBlock.X, firstBlock.X);
             (firstBlock.Y, secondBlock.Y) = (secondBlock.Y, firstBlock.Y);
-
-            return new BlockMovementResult { FromCell = fromCell, ToCell = toCell, FirstBlock = firstBlock, 
-                SecondBlock = secondBlock, IsSwap = true };
+            
+            result.Add(firstBlock.ID, new Vector2Int(fromCell.X, fromCell.Y),  new Vector2Int(toCell.X, toCell.Y));
+            result.Add(secondBlock.ID, new Vector2Int(toCell.X, toCell.Y), new Vector2Int(fromCell.X, fromCell.Y));
         }
     }
 }
