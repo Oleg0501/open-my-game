@@ -19,6 +19,7 @@ namespace Code.Scene.Installers
             Container.BindInterfacesAndSelfTo<BlockViewCreator>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewsRegistry>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewSwipeController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockViewMatchController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewLayerService>().AsSingle().NonLazy();
             Container.Bind<BalloonViewController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<SpriteAnimatorsRegistry>().AsSingle().NonLazy();

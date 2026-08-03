@@ -1,4 +1,5 @@
-﻿using Code.Scene.Config;
+﻿using Code.Scene.Balloon.Config;
+using Code.Scene.Config;
 using UnityEngine;
 using Zenject;
 

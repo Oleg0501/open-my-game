@@ -1,6 +1,5 @@
 ﻿using Code.Logic.LevelBlock;
 using Code.Logic.LevelBlock.Contracts;
-using Code.Logic.LevelGrid;
 using Code.Scene.Block.Contracts;
 using Code.Scene.Config;
 using Code.Scene.Contracts;
@@ -12,23 +11,21 @@ namespace Code.Scene.Block.Implementations
     public class BlockViewSwipeController : IBlockViewSwipeController
     {
         private readonly InputSwipeConfig _inputSwipeConfig;
-        private readonly GridModel _gridModel;
         private readonly IBlockMovementService _blockMovementService;
-        private readonly IBlockGravityService _blockGravityService;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly IBlockViewMovementService _blockViewMovementService;
+        private readonly BlockViewMatchController _blockViewMatchController;
 
         [Inject]
-        public BlockViewSwipeController(InputSwipeConfig inputSwipeConfig, GridModel gridModel, 
-            IBlockMovementService blockMovementService, IBlockGravityService blockGravityService, IBlockViewsRegistry blockViewsRegistry, 
-            IBlockViewLayerService blockViewLayerService, IBlockViewMovementService blockViewMovementService)
+        public BlockViewSwipeController(InputSwipeConfig inputSwipeConfig, IBlockMovementService blockMovementService, 
+            IBlockViewsRegistry blockViewsRegistry, IBlockViewLayerService blockViewLayerService, 
+            IBlockViewMovementService blockViewMovementService, BlockViewMatchController blockViewMatchController)
         {
             _inputSwipeConfig = inputSwipeConfig;
-            _gridModel = gridModel;
             _blockMovementService = blockMovementService;
-            _blockGravityService = blockGravityService;
             _blockViewsRegistry = blockViewsRegistry;
             _blockViewMovementService = blockViewMovementService;
+            _blockViewMatchController = blockViewMatchController;
         }
 
         public void BindToBlockSwipeDetection(BlockView blockView)
@@ -58,10 +55,10 @@ namespace Code.Scene.Block.Implementations
             }
             
             await _blockViewMovementService.MoveAsync(swipeMovementResult);
-            
-            var gravityMovementResult = new BlockMovementResult();
-            _blockGravityService.ApplyGravity(gravityMovementResult);
-            await _blockViewMovementService.MoveAsync(gravityMovementResult);
+            await _blockViewMatchController.MatchAsync();
+            // var gravityMovementResult = new BlockMovementResult();
+            // _blockGravityService.ApplyGravity(gravityMovementResult);
+            // await _blockViewMovementService.MoveAsync(gravityMovementResult);
         }
     }
 }

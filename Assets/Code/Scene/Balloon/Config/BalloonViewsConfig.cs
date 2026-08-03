@@ -1,7 +1,6 @@
-﻿using Code.Scene.Balloon.Config;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Code.Scene.Config
+namespace Code.Scene.Balloon.Config
 {
     [CreateAssetMenu(menuName = "Scene/Balloon Views Config", fileName = "BalloonViewsConfig")]
     public class BalloonViewsConfig : ScriptableObject

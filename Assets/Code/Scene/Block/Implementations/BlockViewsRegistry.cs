@@ -2,18 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using Code.Logic.LevelBlock;
-using Code.Scene.Block;
-using Code.Scene.Contracts;
+using Code.Scene.Block.Contracts;
 
-namespace Code.Scene.Implementations
+namespace Code.Scene.Block.Implementations
 {
     public class BlockViewsRegistry : IBlockViewsRegistry
     {
         private readonly Dictionary<BlockID, BlockView> _views = new();
         
-        public void Register(BlockID blockID, BlockView view)
+        public BlockView Register(BlockID blockID, BlockView view)
         {
             _views.Add(blockID, view);
+            
+            return view;
+        }
+
+        public BlockView Unregister(BlockID blockID)
+        {
+            var view = _views[blockID];
+            _views.Remove(blockID);
+            
+            return view;
         }
 
         public void Clear()

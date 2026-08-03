@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Code.Logic.LevelGrid
+namespace Code.Logic.LevelGrid.Installers
 {
     [CreateAssetMenu(fileName = "LevelScriptableObjectInstaller", menuName = "Installers/LevelScriptableObjectInstaller")]
     public class LevelScriptableObjectInstaller : ScriptableObjectInstaller

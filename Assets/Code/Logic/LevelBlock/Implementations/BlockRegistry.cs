@@ -12,7 +12,17 @@ namespace Code.Logic.LevelBlock.Implementations
         {
             _blocks.Add(blockID, block);
         }
-        
+
+        public void Unregister(BlockID blockID)
+        {
+            _blocks.Remove(blockID);
+        }
+
+        public bool Contains(BlockID blockID)
+        {
+            return _blocks.ContainsKey(blockID);
+        }
+
         public void Clear()
         {
             _blocks.Clear();

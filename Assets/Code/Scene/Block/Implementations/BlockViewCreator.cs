@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Code.Logic.LevelBlock;
+using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid;
 using Code.Scene.Block.Contracts;
 using Code.Scene.Config;
@@ -24,7 +26,7 @@ namespace Code.Scene.Block.Implementations
         private Transform _gameFieldTransform;
         
         [Inject]
-        public BlockViewCreator(DiContainer diContainer, BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository, 
+        public BlockViewCreator(DiContainer diContainer, BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository,
             IBlockViewsRegistry blockViewsRegistry, ISpriteAnimatorsRegistry spriteAnimatorsRegistry, 
             IBlockViewLayerService blockViewLayerService, GridModel gridModel, IBlockViewSwipeController blockViewSwipeController)
         {
@@ -94,6 +96,13 @@ namespace Code.Scene.Block.Implementations
             }
         }
         
+        public void RemoveBlockView(BlockID blockID)
+        {
+            var view = _blockViewsRegistry.Unregister(blockID);
+            _spriteAnimatorsRegistry.Unregister(view.ID);
+            Object.Destroy(view.gameObject);
+        }
+
         private void OnGridGenerated(object sender, Dictionary<Vector2Int, GridCell> eventArgs)
         {
             CreateBlockViews();

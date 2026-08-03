@@ -19,6 +19,9 @@ namespace Code.Logic.LevelGrid
         
         public EventHandler<Dictionary<Vector2Int, GridCell>> OnGenerated =  delegate { };
         public Dictionary<Vector2Int, GridCell> Cells { get; } = new();
+        
+        public int Width { get; private set; }
+        public int Height { get; private set; }
 
         [Inject]
         public GridModel(IBlockIDGenerator blockIDGenerator, IBlockRegistry blockRegistry)
@@ -32,6 +35,9 @@ namespace Code.Logic.LevelGrid
             Cells.Clear();
             _blockRegistry.Clear();
             _blockIDGenerator.Reset();
+            
+            Width = gridConfig.Width;
+            Height = gridConfig.Height;
             
             var blockConfigIDs = Data?.BlockConfigIDs ?? gridConfig.CachedBlockConfigIDs;
             var iterationIndex = 0;

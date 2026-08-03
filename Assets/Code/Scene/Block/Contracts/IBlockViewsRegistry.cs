@@ -1,11 +1,11 @@
 ﻿using Code.Logic.LevelBlock;
-using Code.Scene.Block;
 
-namespace Code.Scene.Contracts
+namespace Code.Scene.Block.Contracts
 {
     public interface IBlockViewsRegistry
     {
-        void Register(BlockID blockID, BlockView view);
+        BlockView Register(BlockID blockID, BlockView view);
+        BlockView Unregister(BlockID blockID);
         void Clear();
         BlockView GetView(BlockID blockID);
         BlockView[] GetViewsAll();
