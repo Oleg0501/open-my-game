@@ -44,7 +44,7 @@ namespace Code.Scene.Block.Implementations
                 var layer = _blockViewLayerService.GetLayerFromXY(move.To.x, move.To.y);
                 blockView.SetLayer(layer);
 
-                tasks.Add(blockView.MoveToAsync(target, 0.25f));
+                tasks.Add(blockView.MoveToAsync(target, 0.75f));
             }
             
             await Task.WhenAll(tasks);

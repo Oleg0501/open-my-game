@@ -1,4 +1,5 @@
-﻿using Code.Scene.Config;
+﻿using System.Threading.Tasks;
+using Code.Scene.Config;
 using UnityEngine;
 
 namespace Code.Scene.SpriteAnimator
@@ -11,6 +12,7 @@ namespace Code.Scene.SpriteAnimator
         private SpriteAnimationConfig _config;
         private float _timer;
         private int _frame;
+        private TaskCompletionSource<bool> _taskCompletionSource;
         
         private void Awake()
         {
@@ -28,6 +30,19 @@ namespace Code.Scene.SpriteAnimator
             _spriteRenderer.sprite = config.Frames[0];
             _timer = 0;
             _frame = 0;
+        }
+
+        public async Task PlayAndWaitAsync(SpriteAnimationConfig config)
+        {
+            if (config.IsLoop)
+            {
+                return;
+            }
+            
+            Play(config);
+            _taskCompletionSource = new TaskCompletionSource<bool>();
+            
+            await _taskCompletionSource.Task;
         }
 
         public void Stop()
@@ -60,6 +75,9 @@ namespace Code.Scene.SpriteAnimator
                     else
                     {
                         _frame = _config.Frames.Length - 1;
+                        _spriteRenderer.sprite = _config.Frames[_frame];
+                        
+                        _taskCompletionSource?.SetResult(true);
                         
                         return;
                     }

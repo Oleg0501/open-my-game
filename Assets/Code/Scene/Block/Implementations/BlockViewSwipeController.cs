@@ -56,9 +56,6 @@ namespace Code.Scene.Block.Implementations
             
             await _blockViewMovementService.MoveAsync(swipeMovementResult);
             await _blockViewMatchController.MatchAsync();
-            // var gravityMovementResult = new BlockMovementResult();
-            // _blockGravityService.ApplyGravity(gravityMovementResult);
-            // await _blockViewMovementService.MoveAsync(gravityMovementResult);
         }
     }
 }

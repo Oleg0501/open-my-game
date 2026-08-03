@@ -34,7 +34,7 @@ MonoBehaviour:
     - {fileID: 21300000, guid: 9f12410a733a05e478955ca541cee165, type: 3}
     - {fileID: 21300000, guid: d2477e295643130429c1cab6035cf111, type: 3}
   _destroyAnimationConfig:
-    _fps: 30
+    _fps: 12
     _isLoop: 0
     _frames:
     - {fileID: 21300000, guid: 894209288215af049a05adc40e310cb0, type: 3}

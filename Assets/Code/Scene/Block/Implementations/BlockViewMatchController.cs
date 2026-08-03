@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Code.Logic.LevelBlock;
 using Code.Logic.LevelBlock.Contracts;
 using Code.Scene.Block.Contracts;
+using Code.Scene.Config;
+using Code.Scene.SpriteAnimator.Contracts;
 using UnityEngine;
 using Zenject;
 
@@ -15,11 +18,14 @@ namespace Code.Scene.Block.Implementations
         private readonly IBlockMatchDestroyer _blockMatchDestroyer;
         private readonly IBlockRegistry _blockRegistry;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
+        private readonly ISpriteAnimatorsRegistry _spriteAnimatorsRegistry;
+        private readonly BlockViewsConfigRepository _blockViewsConfigRepository;
 
         [Inject]
         public BlockViewMatchController(IBlockGravityService blockGravityService, IBlockViewMovementService blockViewMovementService, 
-            IBlockMatchFinder blockMatchFinder, IBlockMatchDestroyer blockMatchDestroyer, 
-            IBlockRegistry blockRegistry, IBlockViewsRegistry blockViewsRegistry)
+            IBlockMatchFinder blockMatchFinder, IBlockMatchDestroyer blockMatchDestroyer, IBlockRegistry blockRegistry, 
+            IBlockViewsRegistry blockViewsRegistry, ISpriteAnimatorsRegistry spriteAnimatorsRegistry, 
+            BlockViewsConfigRepository blockViewsConfigRepository)
         {
             _blockGravityService = blockGravityService;
             _blockViewMovementService = blockViewMovementService;
@@ -27,6 +33,8 @@ namespace Code.Scene.Block.Implementations
             _blockMatchDestroyer = blockMatchDestroyer;
             _blockRegistry = blockRegistry;
             _blockViewsRegistry = blockViewsRegistry;
+            _spriteAnimatorsRegistry = spriteAnimatorsRegistry;
+            _blockViewsConfigRepository = blockViewsConfigRepository;
         }
         
         public async Task MatchAsync()
@@ -46,24 +54,41 @@ namespace Code.Scene.Block.Implementations
                 }
                 
                 _blockMatchDestroyer.DestroyBlocks(matches);
-                SynchronizeBlockViews();
+                await SynchronizeBlockViews();
             }
         }
         
-        public void SynchronizeBlockViews()
+        public async Task SynchronizeBlockViews()
         {
-            var views = _blockViewsRegistry.GetViewsAll();
-            
-            foreach (var view in views)
+            var allViews = _blockViewsRegistry.GetViewsAll();
+            var syncViews = new List<BlockView>();
+
+            foreach (var view in allViews)
             {
                 var blockID = new BlockID(view.ID);
-
+        
                 if (_blockRegistry.Contains(blockID))
                 {
                     continue;
                 }
-
-                _blockViewsRegistry.Unregister(blockID);
+                
+                syncViews.Add(view);
+            }
+            
+            var tasks = new List<Task>();
+        
+            foreach (var view in syncViews)
+            {
+                var viewConfig = _blockViewsConfigRepository.Get(view.ConfigID);
+                tasks.Add(view.SpriteAnimator.PlayAndWaitAsync(viewConfig.AnimationsesConfig.DestroyAnimationConfig));
+            }
+            
+            await Task.WhenAll(tasks);
+        
+            foreach (var view in syncViews)
+            {
+                _blockViewsRegistry.Unregister(new BlockID(view.ID));
+                _spriteAnimatorsRegistry.Unregister(view.ID);
                 Object.Destroy(view.gameObject);
             }
         }

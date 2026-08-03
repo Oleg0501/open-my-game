@@ -11,6 +11,7 @@ namespace Code.Scene.Block
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
         public int ID { get; private set; }
+        public string ConfigID { get; private set; }
         public InputSwipeDetector InputSwipeDetector { get; private set; }
         public SpriteAnimator.SpriteAnimator SpriteAnimator => _spriteAnimator;
         public UnityEvent<int, Vector2> OnSwiped { get; } = new();
@@ -23,9 +24,10 @@ namespace Code.Scene.Block
             InputSwipeDetector.OnSwiped.AddListener(OnInputDetectorSwiped);
         }
         
-        public void Initialize(int id, int layer)
+        public void Initialize(int id, string configId, int layer)
         {
             ID = id;
+            ConfigID = configId;
             SetLayer(layer);
         }
 

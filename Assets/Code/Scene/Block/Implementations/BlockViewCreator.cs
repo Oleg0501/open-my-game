@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Code.Logic.LevelBlock;
-using Code.Logic.LevelBlock.Contracts;
 using Code.Logic.LevelGrid;
 using Code.Scene.Block.Contracts;
 using Code.Scene.Config;
@@ -87,7 +86,7 @@ namespace Code.Scene.Block.Implementations
                 var blockView = _diContainer.InstantiatePrefabForComponent<BlockView>(blockViewConfig.ViewPrefab, 
                     blockPosition, Quaternion.identity, _gameFieldTransform);
                 var blockLayer = _blockViewLayerService.GetLayerFromXY(cell.X, cell.Y);
-                blockView.Initialize(block.ID.Value, blockLayer);
+                blockView.Initialize(block.ID.Value, block.ConfigID, blockLayer);
                 _blockViewsRegistry.Register(block.ID, blockView);
                 _spriteAnimatorsRegistry.Register(block.ID.Value, blockView.SpriteAnimator);
                 
