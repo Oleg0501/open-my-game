@@ -1,38 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using Code.Logic.Blocks.Contracts;
+﻿using Code.Logic.Blocks.Contracts;
+using Code.Logic.Core;
 
 namespace Code.Logic.Blocks.Implementations
 {
-    public class BlockRegistry : IBlockRegistry
+    public class BlockRegistry : BaseRegistry<BlockID, Block>, IBlockRegistry
     {
-        private readonly Dictionary<BlockID, Block> _blocks = new();
-        
         public void Register(BlockID blockID, Block block)
         {
-            _blocks.Add(blockID, block);
+            RegisterInternal(blockID, block);
         }
 
         public void Unregister(BlockID blockID)
         {
-            _blocks.Remove(blockID);
+            UnregisterInternal(blockID);
         }
 
         public bool Contains(BlockID blockID)
         {
-            return _blocks.ContainsKey(blockID);
+            return ContainsInternal(blockID);
         }
 
         public void Clear()
         {
-            _blocks.Clear();
+            ClearInternal();
         }
         
         public Block GetBlock(BlockID blockID)
         {
-            return _blocks.TryGetValue(blockID, out var block)
-                ? block
-                : throw new Exception($"Block with ID '{blockID}' not registered");
+            return GetInternal(blockID);
         }
     }
 }

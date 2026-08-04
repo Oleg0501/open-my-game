@@ -1,45 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Code.Logic.Blocks;
+﻿using Code.Logic.Blocks;
+using Code.Logic.Core;
 using Code.Scene.Block.Contracts;
 
 namespace Code.Scene.Block.Implementations
 {
-    public class BlockViewsRegistry : IBlockViewsRegistry
+    public class BlockViewsRegistry : BaseRegistry<BlockID, BlockView>, IBlockViewsRegistry
     {
-        private readonly Dictionary<BlockID, BlockView> _views = new();
-        
         public BlockView Register(BlockID blockID, BlockView view)
         {
-            _views.Add(blockID, view);
-            
-            return view;
+            return RegisterInternal(blockID, view);
         }
 
         public BlockView Unregister(BlockID blockID)
         {
-            var view = _views[blockID];
-            _views.Remove(blockID);
-            
-            return view;
+            return UnregisterInternal(blockID);
         }
-
-        public void Clear()
-        {
-            _views.Clear();
-        }
-
+        
         public BlockView GetView(BlockID blockID)
         {
-            return _views.TryGetValue(blockID, out var view) 
-                ? view 
-                : throw new Exception($"Block view with ID '{blockID}' not registered");
+            return GetInternal(blockID);
         }
 
         public BlockView[] GetViewsAll()
         {
-            return _views.Values.ToArray();
+            return GetAllInternal();
+        }
+        
+        public void Clear()
+        {
+            ClearInternal();
         }
     }
 }

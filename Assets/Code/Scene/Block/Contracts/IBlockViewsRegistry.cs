@@ -6,8 +6,8 @@ namespace Code.Scene.Block.Contracts
     {
         BlockView Register(BlockID blockID, BlockView view);
         BlockView Unregister(BlockID blockID);
-        void Clear();
         BlockView GetView(BlockID blockID);
         BlockView[] GetViewsAll();
+        void Clear();
     }
 }

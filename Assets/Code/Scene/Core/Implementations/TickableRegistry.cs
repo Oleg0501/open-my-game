@@ -1,12 +1,11 @@
 ﻿using System.Collections.Generic;
+using Code.Logic.Core;
 using Code.Scene.Core.Contracts;
 
 namespace Code.Scene.Core.Implementations
 {
-    public class TickableRegistry : ITickableRegistry
+    public class TickableRegistry : BaseRegistry<int, ITickable>, ITickableRegistry
     {
-        private readonly Dictionary<int, ITickable> _tickables = new();
-        
         private readonly Dictionary<int, ITickable> _pendingRegisterTickables = new();
         private readonly Dictionary<int, ITickable> _pendingUnregisterTickables = new();
 
@@ -21,31 +20,33 @@ namespace Code.Scene.Core.Implementations
                 return;
             }
             
-            _tickables.Add(id, tickable);
+            RegisterInternal(id, tickable);
         }
         
         public void Unregister(int id)
         {
             if (_isTicking)
             {
-                _pendingUnregisterTickables.Add(id, _tickables[id]);
+                _pendingUnregisterTickables.Add(id, GetInternal(id));
                 
                 return;
             }
             
-            _tickables.Remove(id);
+            UnregisterInternal(id);
         }
 
         public void Clear()
         {
-            _tickables.Clear();
+            ClearInternal();
         }
         
         public void Tick(float deltaTime)
         {
             _isTicking = true;
+
+            var tickables = GetAllInternal();
             
-            foreach (var tickable in _tickables.Values)
+            foreach (var tickable in tickables)
             {
                 tickable.Tick(deltaTime);
             }
@@ -54,12 +55,12 @@ namespace Code.Scene.Core.Implementations
 
             foreach (var pendingRegister in _pendingRegisterTickables)
             {
-                _tickables.Add(pendingRegister.Key, pendingRegister.Value);
+                RegisterInternal(pendingRegister.Key, pendingRegister.Value);
             }
 
             foreach (var unPendingRegister in _pendingUnregisterTickables)
             {
-                _tickables.Remove(unPendingRegister.Key);
+                UnregisterInternal(unPendingRegister.Key);
             }
             
             _pendingRegisterTickables.Clear();

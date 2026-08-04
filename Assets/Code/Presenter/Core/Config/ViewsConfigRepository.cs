@@ -1,45 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using Code.Logic.Core;
 using Code.UI.Core;
 using Zenject;
 
 namespace Code.Presenter.Core.Config
 {
-    public sealed class ViewsConfigRepository
+    public sealed class ViewsConfigRepository : BaseRepository<Type, UIView>
     {
-        private readonly Dictionary<Type, UIView> _views = new();
-        
         [Inject]
         public ViewsConfigRepository(UIViewsConfig config)
         {
-            Initialize(config);
-        }
-
-        private void Initialize(UIViewsConfig config)
-        {
-            _views.Clear();
-
-            foreach (var viewConfig in config.ViewsConfig)
-            {
-                var viewType = viewConfig.ViewType;
-
-                if (!_views.TryAdd(viewType, viewConfig.ViewPrefab))
-                {
-                    throw new Exception($"View with type '{viewType.Name}' already registered");
-                }
-            }
+            Initialize(config.ViewsConfig.Select(x => (x.ViewType, x.ViewPrefab)));
         }
 
         public TView GetPrefab<TView>() where TView : UIView
         {
-            var viewType = typeof(TView);
-            
-            if (_views.TryGetValue(viewType, out var viewPrefab))
-            {
-                return (TView)viewPrefab;
-            }
-            
-            throw new Exception($"View prefab of type '{viewType.Name}' not registered");
+            return (TView)GetInternal(typeof(TView));
         }
     }
 }
