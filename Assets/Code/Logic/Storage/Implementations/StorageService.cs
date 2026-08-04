@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Code.Logic.LevelGrid;
+using Code.Logic.Grids;
 using Code.Logic.Storage.Contracts;
 using UnityEngine;
 using Zenject;
@@ -49,15 +49,6 @@ namespace Code.Logic.Storage.Implementations
             Debug.Log("StorageService, all save storages were saved");
         }
         
-        private void RegisterStorages()
-        {
-            var gridModel = _diContainer.Resolve<GridModel>();
-            var levelModel = _diContainer.Resolve<LevelModel>();
-
-            _storages.Add(gridModel.GetType(), gridModel);
-            _storages.Add(levelModel.GetType(), levelModel);
-        }
-        
         private void LoadAll()
         {
             foreach (var storage in _storages.Values)
@@ -66,6 +57,15 @@ namespace Code.Logic.Storage.Implementations
             }
 
             Debug.Log("StorageService, all save storages were loaded");
+        }
+        
+        private void RegisterStorages()
+        {
+            var gridModel = _diContainer.Resolve<GridModel>();
+            var levelModel = _diContainer.Resolve<LevelModel>();
+
+            _storages.Add(gridModel.GetType(), gridModel);
+            _storages.Add(levelModel.GetType(), levelModel);
         }
     }
 }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 45ac4b39764d49298bffcc5760051140, type: 3}
   m_Name: PresenterScriptableObjectInstaller
   m_EditorClassIdentifier: 
-  uiViewsConfig: {fileID: 11400000, guid: a72d5a30ccb8fc14da8470509c7811cd, type: 2}
+  _uiViewsConfig: {fileID: 11400000, guid: a72d5a30ccb8fc14da8470509c7811cd, type: 2}

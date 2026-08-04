@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using Zenject;
 
-namespace Code.Scene.Config
+namespace Code.Scene.Block.Config
 {
-    public class BlockViewsConfigRepository
+    public sealed class BlockViewsConfigRepository
     {
         private readonly Dictionary<string, BlockViewConfig> _views = new();
         

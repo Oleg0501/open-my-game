@@ -1,4 +1,5 @@
-﻿using Code.Presenter.Core.Contracts;
+﻿using Code.Presenter.Core.Config;
+using Code.Presenter.Core.Contracts;
 using Code.UI.Core;
 using UnityEngine;
 using Zenject;
@@ -9,7 +10,7 @@ namespace Code.Presenter.Core.Implementations
     {
         protected TView View;
 
-        [Inject(Id = "Canvas")] private Canvas _canvas;
+        [Inject(Id = typeof(CanvasInjectID))] private Canvas _canvas;
         
         public void CreateView(DiContainer diContainer, UIView viewPrefab)
         {

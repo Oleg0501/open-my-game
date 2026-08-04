@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Code.Logic.LevelBlock;
-using Code.Logic.LevelGrid;
+using Code.Logic.Blocks;
+using Code.Logic.Grids;
 using Code.Scene.Block.Contracts;
-using Code.Scene.Contracts;
 using UnityEngine;
 using Zenject;
 
@@ -25,10 +24,10 @@ namespace Code.Scene.Block.Implementations
             _blockViewLayerService = blockViewLayerService;
         }
         
-        public async Task MoveAsync(BlockMovementResult blockMovementResult)
+        public async Task MoveAsync(BlockMovementData blockMovementData)
         {
             var tasks = new List<Task>();
-            var moves = blockMovementResult.Moves;
+            var moves = blockMovementData.Movements;
 
             var maxX = _gridModel.Cells.Values.ToArray().Max(c => c.X);
             var maxY = _gridModel.Cells.Values.ToArray().Max(c => c.Y);
@@ -39,9 +38,9 @@ namespace Code.Scene.Block.Implementations
             {
                 var blockView = _blockViewsRegistry.GetView(move.BlockID);
 
-                var target = new Vector3(move.To.x, move.To.y, 0) - offset;
+                var target = new Vector3(move.ToPoint.x, move.ToPoint.y, 0) - offset;
                 
-                var layer = _blockViewLayerService.GetLayerFromXY(move.To.x, move.To.y);
+                var layer = _blockViewLayerService.GetLayerFromXY(move.ToPoint.x, move.ToPoint.y);
                 blockView.SetLayer(layer);
 
                 tasks.Add(blockView.MoveToAsync(target, 0.75f));

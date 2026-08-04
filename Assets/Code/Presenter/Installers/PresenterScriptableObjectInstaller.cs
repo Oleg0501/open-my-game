@@ -4,14 +4,14 @@ using Zenject;
 
 namespace Code.Presenter.Installers
 {
-    [CreateAssetMenu(fileName = "PresenterScriptableObjectInstaller", menuName = "Installers/PresenterScriptableObjectInstaller")]
+    [CreateAssetMenu(fileName = "Presenter ScriptableObject Installer", menuName = "Installers/PresenterScriptableObjectInstaller")]
     public class PresenterScriptableObjectInstaller : ScriptableObjectInstaller
     {
-        [SerializeField] private UIViewsConfig uiViewsConfig;
+        [SerializeField] private UIViewsConfig _uiViewsConfig;
 
         public override void InstallBindings()
         {
-            Container.Bind<UIViewsConfig>().FromInstance(uiViewsConfig).AsSingle().NonLazy();
+            Container.Bind<UIViewsConfig>().FromInstance(_uiViewsConfig).AsSingle().NonLazy();
             Container.Bind<ViewsConfigRepository>().AsSingle().NonLazy();
         }
     }

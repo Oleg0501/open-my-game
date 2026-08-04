@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Code.Logic.LevelBlock;
+using Code.Logic.Blocks;
 using Code.Scene.Block.Contracts;
 
 namespace Code.Scene.Block.Implementations

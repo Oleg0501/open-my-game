@@ -5,7 +5,7 @@ namespace Code.Logic.Storage.Implementations
 {
     public abstract class BaseJsonStorage<T> : IStorage where T : new()
     {
-        public abstract string SaveKey { get; }
+        protected abstract string SaveKey { get; }
         
         protected T Data = new();
         protected bool IsLoadDefault;

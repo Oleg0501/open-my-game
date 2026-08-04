@@ -1,8 +1,7 @@
-﻿using Code.Logic.LevelBlock;
-using Code.Logic.LevelBlock.Contracts;
+﻿using Code.Logic.Blocks;
+using Code.Logic.Blocks.Contracts;
 using Code.Scene.Block.Contracts;
 using Code.Scene.Config;
-using Code.Scene.Contracts;
 using UnityEngine;
 using Zenject;
 
@@ -46,7 +45,7 @@ namespace Code.Scene.Block.Implementations
 
         private async void OnSwiped(int id, Vector2 swipeDirection)
         {
-            var swipeMovementResult = new BlockMovementResult();
+            var swipeMovementResult = new BlockMovementData();
             var movementDirection = BlockMovementDirectionHelper.GetNormalizedDirection(swipeDirection);
             
             if (!_blockMovementService.TryMove(new BlockID(id), movementDirection, swipeMovementResult))

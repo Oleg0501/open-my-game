@@ -13,15 +13,21 @@ MonoBehaviour:
   m_Name: BalloonViewsConfig
   m_EditorClassIdentifier: 
   _sceneRootPrefab: {fileID: 7255397158553853315, guid: 52828a2db93f3ee4eb1e078c51dff770, type: 3}
-  _maxSceneAmount: 2
+  _maxSceneAmount: 3
   _minSpawnDelay: 1
   _maxSpawnDelay: 3
+  _leftSpawnBoundary: {x: 0, y: 0, z: 10}
+  _rightSpawnBoundary: {x: 1, y: 0, z: 10}
+  _bottomSpawnBoundary: {x: 0, y: 0, z: 10}
+  _topSpawnBoundary: {x: 0, y: 1, z: 10}
+  _outOfScreenLeft: -0.2
+  _outOfScreenRight: 1.2
   _viewConfigs:
-  - _balloonViewPrefab: {fileID: 395653720196787607, guid: 39a6acd70e69ff34cafd786da05c5945, type: 3}
+  - _viewPrefab: {fileID: 395653720196787607, guid: 39a6acd70e69ff34cafd786da05c5945, type: 3}
     _horizontalSpeed: 0.1
     _waveAmplitude: 0.5
     _waveFrequency: 0.25
-  - _balloonViewPrefab: {fileID: 2412856934900505185, guid: cc29c9da5b51e1d4dafe86002d0e43a1, type: 3}
+  - _viewPrefab: {fileID: 2412856934900505185, guid: cc29c9da5b51e1d4dafe86002d0e43a1, type: 3}
     _horizontalSpeed: 0.15
     _waveAmplitude: 0.25
     _waveFrequency: 0.5

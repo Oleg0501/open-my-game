@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Code.Logic.LevelBlock;
-using Code.Logic.LevelBlock.Contracts;
+using Code.Logic.Blocks;
+using Code.Logic.Blocks.Contracts;
+using Code.Scene.Block.Config;
 using Code.Scene.Block.Contracts;
-using Code.Scene.Config;
-using Code.Scene.SpriteAnimator.Contracts;
+using Code.Scene.Core.Contracts;
 using UnityEngine;
 using Zenject;
 
@@ -12,28 +12,28 @@ namespace Code.Scene.Block.Implementations
 {
     public sealed class BlockViewMatchController
     {
-        private readonly IBlockGravityService _blockGravityService;
+        private readonly IBlockDropService _blockDropService;
         private readonly IBlockViewMovementService _blockViewMovementService;
         private readonly IBlockMatchFinder _blockMatchFinder;
         private readonly IBlockMatchDestroyer _blockMatchDestroyer;
         private readonly IBlockRegistry _blockRegistry;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
-        private readonly ISpriteAnimatorsRegistry _spriteAnimatorsRegistry;
+        private readonly ITickableRegistry _tickableRegistry;
         private readonly BlockViewsConfigRepository _blockViewsConfigRepository;
 
         [Inject]
-        public BlockViewMatchController(IBlockGravityService blockGravityService, IBlockViewMovementService blockViewMovementService, 
+        public BlockViewMatchController(IBlockDropService blockDropService, IBlockViewMovementService blockViewMovementService, 
             IBlockMatchFinder blockMatchFinder, IBlockMatchDestroyer blockMatchDestroyer, IBlockRegistry blockRegistry, 
-            IBlockViewsRegistry blockViewsRegistry, ISpriteAnimatorsRegistry spriteAnimatorsRegistry, 
+            IBlockViewsRegistry blockViewsRegistry, ITickableRegistry tickableRegistry, 
             BlockViewsConfigRepository blockViewsConfigRepository)
         {
-            _blockGravityService = blockGravityService;
+            _blockDropService = blockDropService;
             _blockViewMovementService = blockViewMovementService;
             _blockMatchFinder = blockMatchFinder;
             _blockMatchDestroyer = blockMatchDestroyer;
             _blockRegistry = blockRegistry;
             _blockViewsRegistry = blockViewsRegistry;
-            _spriteAnimatorsRegistry = spriteAnimatorsRegistry;
+            _tickableRegistry = tickableRegistry;
             _blockViewsConfigRepository = blockViewsConfigRepository;
         }
         
@@ -41,8 +41,8 @@ namespace Code.Scene.Block.Implementations
         {
             while (true)
             {
-                var blockMovementResult = new BlockMovementResult();
-                _blockGravityService.ApplyGravity(blockMovementResult);
+                var blockMovementResult = new BlockMovementData();
+                _blockDropService.Drop(blockMovementResult);
                 
                 await _blockViewMovementService.MoveAsync(blockMovementResult);
 
@@ -80,7 +80,7 @@ namespace Code.Scene.Block.Implementations
             foreach (var view in syncViews)
             {
                 var viewConfig = _blockViewsConfigRepository.Get(view.ConfigID);
-                tasks.Add(view.SpriteAnimator.PlayAndWaitAsync(viewConfig.AnimationsesConfig.DestroyAnimationConfig));
+                tasks.Add(view.SpriteAnimator.PlayAndWaitAsync(viewConfig.AnimationsConfig.DestroyAnimationConfig));
             }
             
             await Task.WhenAll(tasks);
@@ -88,7 +88,7 @@ namespace Code.Scene.Block.Implementations
             foreach (var view in syncViews)
             {
                 _blockViewsRegistry.Unregister(new BlockID(view.ID));
-                _spriteAnimatorsRegistry.Unregister(view.ID);
+                _tickableRegistry.Unregister(view.ID);
                 Object.Destroy(view.gameObject);
             }
         }

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd69fd2ae92c4e4691c0ccf3669bce57, type: 3}
   m_Name: LevelScriptableObjectInstaller
   m_EditorClassIdentifier: 
-  _levelConfig: {fileID: 11400000, guid: da1f16e942490924e8792ff393a0e010, type: 2}
+  gridsConfig: {fileID: 11400000, guid: da1f16e942490924e8792ff393a0e010, type: 2}

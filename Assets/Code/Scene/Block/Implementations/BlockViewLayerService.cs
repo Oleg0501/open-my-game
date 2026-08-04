@@ -1,6 +1,6 @@
-﻿using Code.Scene.Contracts;
+﻿using Code.Scene.Block.Contracts;
 
-namespace Code.Scene.Implementations
+namespace Code.Scene.Block.Implementations
 {
     public class BlockViewLayerService : IBlockViewLayerService
     {

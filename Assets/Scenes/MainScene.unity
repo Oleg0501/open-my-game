@@ -522,6 +522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c43b3e708c3450a881353be970323f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canvas: {fileID: 340490154}
 --- !u!114 &1065159767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -547,7 +548,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camera: {fileID: 519420031}
-  _canvas: {fileID: 340490154}
   _spriteAnimatorSystem: {fileID: 1895838985}
 --- !u!114 &1065159769
 MonoBehaviour:

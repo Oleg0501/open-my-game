@@ -1,21 +1,18 @@
 ﻿using System;
-using Code.Logic.LevelBlock.Config;
-using Code.Scene.Block;
-using Code.Scene.Block.Config;
+using Code.Logic.Blocks.Config;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Code.Scene.Config
+namespace Code.Scene.Block.Config
 {
     [Serializable]
     public class BlockViewConfig
     {
         [SerializeField] private BlockIDConfig _idConfig;
         [SerializeField] private BlockView _viewPrefab;
-        [FormerlySerializedAs("_animationsConfig")] [SerializeField] private BlockViewAnimationsConfig animationsesConfig;
+        [SerializeField] private BlockViewAnimationsConfig _animationsConfig;
         
         public  BlockIDConfig IDConfig => _idConfig;
         public BlockView ViewPrefab => _viewPrefab;
-        public BlockViewAnimationsConfig AnimationsesConfig => animationsesConfig;
+        public BlockViewAnimationsConfig AnimationsConfig => _animationsConfig;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Code.Scene.Contracts
+﻿namespace Code.Scene.Block.Contracts
 {
     public interface IBlockViewLayerService
     {

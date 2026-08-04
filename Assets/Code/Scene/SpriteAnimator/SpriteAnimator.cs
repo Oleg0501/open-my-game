@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Code.Scene.Config;
+using Code.Scene.Core.Contracts;
 using UnityEngine;
 
 namespace Code.Scene.SpriteAnimator
 {
     [RequireComponent(typeof(SpriteRenderer))]
-    public class SpriteAnimator : MonoBehaviour
+    public class SpriteAnimator : MonoBehaviour, ITickable
     {
         private SpriteRenderer _spriteRenderer;
 
@@ -21,7 +22,7 @@ namespace Code.Scene.SpriteAnimator
 
         private void OnDestroy()
         {
-            Stop();
+            _config = null;
         }
 
         public void Play(SpriteAnimationConfig config)
@@ -43,11 +44,6 @@ namespace Code.Scene.SpriteAnimator
             _taskCompletionSource = new TaskCompletionSource<bool>();
             
             await _taskCompletionSource.Task;
-        }
-
-        public void Stop()
-        {
-            _config = null;
         }
         
         public void Tick(float deltaTime)

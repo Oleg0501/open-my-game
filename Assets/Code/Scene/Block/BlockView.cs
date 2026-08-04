@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Code.Scene.SwipeDetector;
 using UnityEngine;
 using UnityEngine.Events;
 

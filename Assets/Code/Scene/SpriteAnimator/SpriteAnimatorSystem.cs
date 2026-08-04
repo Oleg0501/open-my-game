@@ -1,5 +1,4 @@
-﻿using Code.Scene.Contracts;
-using Code.Scene.SpriteAnimator.Contracts;
+﻿using Code.Scene.Core.Contracts;
 using UnityEngine;
 using Zenject;
 
@@ -7,17 +6,17 @@ namespace Code.Scene.SpriteAnimator
 {
     public class SpriteAnimatorSystem : MonoBehaviour
     {
-        private ISpriteAnimatorsRegistry _spriteAnimatorsRegistry;
+        private ITickableRegistry _tickableRegistry;
 
         [Inject]
-        private void Construct(ISpriteAnimatorsRegistry spriteAnimatorsRegistry)
+        private void Construct(ITickableRegistry tickableRegistry)
         {
-            _spriteAnimatorsRegistry = spriteAnimatorsRegistry;
+            _tickableRegistry = tickableRegistry;
         }
         
         private void Update()
         {
-            _spriteAnimatorsRegistry.Tick(Time.deltaTime);
+            _tickableRegistry.Tick(Time.deltaTime);
         }
     }
 }

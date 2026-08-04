@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Code.Scene.Config
+namespace Code.Scene.Block.Config
 {
     [CreateAssetMenu(menuName = "Scene/Block Views Config", fileName = "BlockViewsConfig")]
     public class BlockViewsConfig : ScriptableObject

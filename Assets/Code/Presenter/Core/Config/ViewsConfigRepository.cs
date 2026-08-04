@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Code.Presenter.Core.Config
 {
-    public class ViewsConfigRepository
+    public sealed class ViewsConfigRepository
     {
         private readonly Dictionary<Type, UIView> _views = new();
         
@@ -21,11 +21,11 @@ namespace Code.Presenter.Core.Config
 
             foreach (var viewConfig in config.ViewsConfig)
             {
-                var type = viewConfig.ViewType;
+                var viewType = viewConfig.ViewType;
 
-                if (!_views.TryAdd(type, viewConfig.ViewPrefab))
+                if (!_views.TryAdd(viewType, viewConfig.ViewPrefab))
                 {
-                    throw new Exception($"View with type '{type.Name}' already registered");
+                    throw new Exception($"View with type '{viewType.Name}' already registered");
                 }
             }
         }

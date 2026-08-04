@@ -1,4 +1,4 @@
-﻿using Code.Logic.LevelGrid;
+﻿using Code.Logic.Grids;
 using Code.Presenter.Core.Implementations;
 using Code.UI.Game;
 using Zenject;
@@ -21,7 +21,7 @@ namespace Code.Presenter.Game
         {
             base.Enable();
             
-            _gridModel.Generate(_levelModel.NextLevelConfig());
+            _gridModel.GenerateGrid(_levelModel.NextGrid());
             
             View.SetLevelText($"Level: {_levelModel.CurrentLevel}");
             View.OnRestartButtonClicked.AddListener(OnRestartButtonClicked);
@@ -38,12 +38,12 @@ namespace Code.Presenter.Game
 
         private void OnRestartButtonClicked()
         {
-            _gridModel.Generate(_levelModel.CurrentGridConfig);
+            _gridModel.GenerateGrid(_levelModel.CurrentGridConfig);
         }
         
         private void OnNextButtonClicked()
         {
-            _gridModel.Generate(_levelModel.NextLevelConfig());
+            _gridModel.GenerateGrid(_levelModel.NextGrid());
             View.SetLevelText($"Level: {_levelModel.CurrentLevel}");
         }
     }
