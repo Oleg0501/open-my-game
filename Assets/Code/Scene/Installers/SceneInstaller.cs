@@ -23,9 +23,10 @@ namespace Code.Scene.Installers
             Container.BindInterfacesAndSelfTo<BlockViewsRegistry>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewSwipeController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewMatchController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockViewsScaleService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewLayerService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<TickableRegistry>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<BlockViewViewMovementService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BlockViewMovementService>().AsSingle().NonLazy();
         }
     }
 }

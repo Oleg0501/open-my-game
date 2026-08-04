@@ -16,6 +16,7 @@ namespace Code.Scene.Block.Implementations
         private readonly BlockViewsConfigRepository _configRepository;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly ITickableRegistry _tickableRegistry;
+        private readonly IBlockViewsScaleService _blockViewsScaleService;
         private readonly IBlockViewLayerService _blockViewLayerService;
         private readonly GridModel _gridModel;
         private readonly IBlockViewSwipeController _blockViewSwipeController;
@@ -24,7 +25,7 @@ namespace Code.Scene.Block.Implementations
         
         [Inject]
         public BlockViewController(DiContainer diContainer, BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository,
-            IBlockViewsRegistry blockViewsRegistry, ITickableRegistry tickableRegistry, 
+            IBlockViewsRegistry blockViewsRegistry, ITickableRegistry tickableRegistry, IBlockViewsScaleService blockViewsScaleService, 
             IBlockViewLayerService blockViewLayerService, GridModel gridModel, IBlockViewSwipeController blockViewSwipeController)
         {
             _diContainer = diContainer;
@@ -32,6 +33,7 @@ namespace Code.Scene.Block.Implementations
             _configRepository = configRepository;
             _blockViewsRegistry = blockViewsRegistry;
             _tickableRegistry = tickableRegistry;
+            _blockViewsScaleService = blockViewsScaleService;
             _blockViewLayerService = blockViewLayerService;
             _gridModel = gridModel;
             _blockViewSwipeController = blockViewSwipeController;
@@ -47,6 +49,8 @@ namespace Code.Scene.Block.Implementations
                 _gameFieldTransform = gameField.transform;
             }
 
+            _gameFieldTransform.localScale = Vector3.one * _blockViewsScaleService.GetSceneRootScale(_gridModel.Width, _gridModel.Height);
+            
             var blockViewsOld = _blockViewsRegistry.GetViewsAll();
             
             foreach (var blockView in blockViewsOld)
@@ -64,10 +68,7 @@ namespace Code.Scene.Block.Implementations
                 return;
             }
             
-            var maxX = cells.Max(c => c.X);
-            var maxY = cells.Max(c => c.Y);
-
-            var offset = new Vector3(maxX * 0.5f, maxY * 0.5f);
+            var offset = new Vector3((_gridModel.Width - 1) * 0.5f, (_gridModel.Height - 1) * 0.5f, 0f);
             
             _blockViewSwipeController.UnsubscribeFromAllBlockSwipes();
             
@@ -81,8 +82,8 @@ namespace Code.Scene.Block.Implementations
                 var block = cell.Block;
                 var blockPosition = new Vector3(cell.X, cell.Y) - offset;
                 var blockViewConfig = _configRepository.Get(block.ConfigID);
-                var blockView = _diContainer.InstantiatePrefabForComponent<BlockView>(blockViewConfig.ViewPrefab, 
-                    blockPosition, Quaternion.identity, _gameFieldTransform);
+                var blockView = _diContainer.InstantiatePrefabForComponent<BlockView>(blockViewConfig.ViewPrefab, _gameFieldTransform);
+                blockView.transform.localPosition = blockPosition;
                 var blockLayer = _blockViewLayerService.GetLayerFromXY(cell.X, cell.Y);
                 blockView.Initialize(block.ID.Value, block.ConfigID, blockLayer);
                 _blockViewsRegistry.Register(block.ID, blockView);

@@ -9,15 +9,14 @@ using Zenject;
 
 namespace Code.Scene.Block.Implementations
 {
-    public class BlockViewViewMovementService : IBlockViewMovementService
+    public class BlockViewMovementService : IBlockViewMovementService
     {
         private readonly GridModel _gridModel;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly IBlockViewLayerService _blockViewLayerService;
 
         [Inject]
-        public BlockViewViewMovementService(GridModel gridModel, IBlockViewsRegistry blockViewsRegistry, 
-            IBlockViewLayerService blockViewLayerService)
+        public BlockViewMovementService(GridModel gridModel, IBlockViewsRegistry blockViewsRegistry, IBlockViewLayerService blockViewLayerService)
         {
             _gridModel = gridModel;
             _blockViewsRegistry = blockViewsRegistry;
@@ -28,11 +27,7 @@ namespace Code.Scene.Block.Implementations
         {
             var tasks = new List<Task>();
             var moves = blockMovementData.Movements;
-
-            var maxX = _gridModel.Cells.Values.ToArray().Max(c => c.X);
-            var maxY = _gridModel.Cells.Values.ToArray().Max(c => c.Y);
-            
-            var offset = new Vector3(maxX * 0.5f, maxY * 0.5f);
+            var offset = new Vector3((_gridModel.Width - 1) * 0.5f, (_gridModel.Height - 1) * 0.5f, 0f);
             
             foreach (var move in moves)
             {

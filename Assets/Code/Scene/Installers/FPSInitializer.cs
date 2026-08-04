@@ -8,7 +8,9 @@ namespace Code.Scene.Installers
         
         private void Awake()
         {
+#if !UNITY_EDITOR
             Application.targetFrameRate = _targetFrameRate;
+#endif
         }
     }
 }

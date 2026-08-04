@@ -41,11 +41,11 @@ namespace Code.Scene.Block
         {
             _isMoving = true;
             
-            var startPosition = transform.position;
+            var startPosition = transform.localPosition;
 
             if (duration <= 0f)
             {
-                transform.position = targetPosition;
+                transform.localPosition = targetPosition;
                 
                 return;
             }
@@ -57,12 +57,12 @@ namespace Code.Scene.Block
                 elapsed += Time.deltaTime;
                 var t = Mathf.Clamp01(elapsed / duration);
 
-                transform.position = Vector3.Lerp(startPosition, targetPosition, t);
+                transform.localPosition = Vector3.Lerp(startPosition, targetPosition, t);
 
                 await Task.Yield();
             }
 
-            transform.position = targetPosition;
+            transform.localPosition = targetPosition;
             _isMoving = false;
         }
         
