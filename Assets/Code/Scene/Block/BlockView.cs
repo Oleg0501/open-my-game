@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Code.Scene.SwipeDetector;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,7 +38,7 @@ namespace Code.Scene.Block
             _spriteRenderer.sortingOrder = layer;
         }
         
-        public async Task MoveToAsync(Vector3 targetPosition, float duration)
+        public async UniTask MoveToAsync(Vector3 targetPosition, float duration)
         {
             _isMoving = true;
             

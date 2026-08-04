@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Code.Logic.Blocks;
+using Cysharp.Threading.Tasks;
 
 namespace Code.Scene.Block.Contracts
 {
     public interface IBlockViewMovementService
     {
-        Task MoveAsync(BlockMovementData data);
+        UniTask MoveAsync(BlockMovementData data);
     }
 }

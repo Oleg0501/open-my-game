@@ -1,10 +1,10 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Code.Logic.Blocks;
 using Code.Logic.Blocks.Contracts;
 using Code.Scene.Block.Config;
 using Code.Scene.Block.Contracts;
 using Code.Scene.Core.Contracts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -37,7 +37,7 @@ namespace Code.Scene.Block.Implementations
             _blockViewsConfigRepository = blockViewsConfigRepository;
         }
         
-        public async Task MatchAsync()
+        public async UniTask MatchAsync()
         {
             while (true)
             {
@@ -58,7 +58,7 @@ namespace Code.Scene.Block.Implementations
             }
         }
         
-        public async Task SynchronizeBlockViews()
+        public async UniTask SynchronizeBlockViews()
         {
             var allViews = _blockViewsRegistry.GetViewsAll();
             var syncViews = new List<BlockView>();
@@ -75,7 +75,7 @@ namespace Code.Scene.Block.Implementations
                 syncViews.Add(view);
             }
             
-            var tasks = new List<Task>();
+            var tasks = new List<UniTask>();
         
             foreach (var view in syncViews)
             {
@@ -83,7 +83,7 @@ namespace Code.Scene.Block.Implementations
                 tasks.Add(view.SpriteAnimator.PlayAndWaitAsync(viewConfig.AnimationsConfig.DestroyAnimationConfig));
             }
             
-            await Task.WhenAll(tasks);
+            await UniTask.WhenAll(tasks);
         
             foreach (var view in syncViews)
             {

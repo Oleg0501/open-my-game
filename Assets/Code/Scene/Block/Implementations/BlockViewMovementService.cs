@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Code.Logic.Blocks;
 using Code.Logic.Grids;
 using Code.Scene.Block.Contracts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -23,9 +23,9 @@ namespace Code.Scene.Block.Implementations
             _blockViewLayerService = blockViewLayerService;
         }
         
-        public async Task MoveAsync(BlockMovementData blockMovementData)
+        public async UniTask MoveAsync(BlockMovementData blockMovementData)
         {
-            var tasks = new List<Task>();
+            var tasks = new List<UniTask>();
             var moves = blockMovementData.Movements;
             var offset = new Vector3((_gridModel.Width - 1) * 0.5f, (_gridModel.Height - 1) * 0.5f, 0f);
             
@@ -41,7 +41,7 @@ namespace Code.Scene.Block.Implementations
                 tasks.Add(blockView.MoveToAsync(target, 0.75f));
             }
             
-            await Task.WhenAll(tasks);
+            await UniTask.WhenAll(tasks);
         }
     }
 }

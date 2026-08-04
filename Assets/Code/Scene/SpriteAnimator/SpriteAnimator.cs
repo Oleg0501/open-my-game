@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Code.Scene.Config;
 using Code.Scene.Core.Contracts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Code.Scene.SpriteAnimator
@@ -33,7 +34,7 @@ namespace Code.Scene.SpriteAnimator
             _frame = 0;
         }
 
-        public async Task PlayAndWaitAsync(SpriteAnimationConfig config)
+        public async UniTask PlayAndWaitAsync(SpriteAnimationConfig config)
         {
             if (config.IsLoop)
             {

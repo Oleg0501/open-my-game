@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
-using System.Threading.Tasks;
 using Code.Logic.Grids;
 using Code.Scene.Balloon.Config;
 using Code.Scene.Core;
 using Code.Scene.Core.Contracts;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 using Object = UnityEngine.Object;
@@ -56,7 +56,7 @@ namespace Code.Scene.Balloon
             _isStarted = true;
         }
         
-        private async Task SpawnAsync(CancellationToken cancellationToken)
+        private async UniTask SpawnAsync(CancellationToken cancellationToken)
         {
             while (!cancellationToken.IsCancellationRequested)
             {
@@ -68,7 +68,7 @@ namespace Code.Scene.Balloon
                 var seconds = Random.Range(_config.MinSpawnDelay, _config.MaxSpawnDelay);
                 var delay = TimeSpan.FromSeconds(seconds);
 
-                await Task.Delay(delay, cancellationToken);
+                await UniTask.Delay(delay, cancellationToken: cancellationToken);
             }
         }
         
