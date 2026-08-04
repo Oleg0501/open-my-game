@@ -38,7 +38,7 @@ namespace Code.Scene.Balloon
 
         public void Tick(float deltaTime)
         {
-            _time += Time.deltaTime;
+            _time += deltaTime;
 
             var x = _startX + _direction * _horizontalSpeed * _time;
             var y = _startY + Mathf.Sin(_time * _waveFrequency) * _waveAmplitude;

@@ -76,21 +76,19 @@ namespace Code.Scene.Balloon
         {
             var leftToRight = Random.value > 0.5f;
 
-            var leftSpawnBoundary = _camera.ViewportToWorldPoint(_config.LeftSpawnBoundary);
-            var rightSpawnBoundary = _camera.ViewportToWorldPoint(_config.RightSpawnBoundary);
-            var bottomSpawnBoundary = _camera.ViewportToWorldPoint(_config.BottomSpawnBoundary);
-            var topSpawnBoundary = _camera.ViewportToWorldPoint(_config.TopSpawnBoundary);
+            var viewportY = Random.Range(_config.BottomSpawnBoundary.y, _config.TopSpawnBoundary.y);
+            var viewportPosition = leftToRight
+                ? new Vector3(_config.LeftSpawnBoundary.x, viewportY, _camera.nearClipPlane)
+                : new Vector3(_config.RightSpawnBoundary.x, viewportY, _camera.nearClipPlane);
 
-            var height = Random.Range(bottomSpawnBoundary.y, topSpawnBoundary.y);
+            var position = _camera.ViewportToWorldPoint(viewportPosition);
+            position.z = 0f;
+
             var config = _config.ViewConfigs[Random.Range(0, _config.ViewConfigs.Length)];
-            
-            var position = leftToRight 
-                ? new Vector3(leftSpawnBoundary.x - 1f, height, 0) 
-                : new Vector3(rightSpawnBoundary.x + 1f, height, 0);
-            
             var view = _diContainer.InstantiatePrefabForComponent<BalloonView>(config.ViewPrefab, position, Quaternion.identity, _sceneRootTransform);
-            view.Initialize(_camera, leftToRight, config.HorizontalSpeed, config.WaveAmplitude, config.WaveFrequency,
+            view.Initialize(_camera, leftToRight, config.HorizontalSpeed, config.WaveAmplitude, config.WaveFrequency, 
                 _config.OutOfScreenLeft, _config.OutOfScreenRight);
+
             view.OnOutOfScreen.AddListener(OnViewOutOfScreen);
 
             _views.Add(view);

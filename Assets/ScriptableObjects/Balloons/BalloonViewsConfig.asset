@@ -15,13 +15,13 @@ MonoBehaviour:
   _sceneRootPrefab: {fileID: 7255397158553853315, guid: 52828a2db93f3ee4eb1e078c51dff770, type: 3}
   _maxSceneAmount: 3
   _minSpawnDelay: 1
-  _maxSpawnDelay: 3
-  _leftSpawnBoundary: {x: 0, y: 0, z: 10}
-  _rightSpawnBoundary: {x: 1, y: 0, z: 10}
+  _maxSpawnDelay: 5
+  _leftSpawnBoundary: {x: -0.25, y: 0, z: 10}
+  _rightSpawnBoundary: {x: 1.25, y: 0, z: 10}
   _bottomSpawnBoundary: {x: 0, y: 0, z: 10}
   _topSpawnBoundary: {x: 0, y: 1, z: 10}
-  _outOfScreenLeft: -0.2
-  _outOfScreenRight: 1.2
+  _outOfScreenLeft: -0.3
+  _outOfScreenRight: 1.3
   _viewConfigs:
   - _viewPrefab: {fileID: 395653720196787607, guid: 39a6acd70e69ff34cafd786da05c5945, type: 3}
     _horizontalSpeed: 0.1
