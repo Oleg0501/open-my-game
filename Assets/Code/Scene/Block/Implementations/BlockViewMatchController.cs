@@ -79,6 +79,8 @@ namespace Code.Scene.Block.Implementations
         
             foreach (var view in syncViews)
             {
+                view.SetInputLock(true);
+                
                 var viewConfig = _blockViewsConfigRepository.Get(view.ConfigID);
                 tasks.Add(view.SpriteAnimator.PlayAndWaitAsync(viewConfig.AnimationsConfig.DestroyAnimationConfig));
             }

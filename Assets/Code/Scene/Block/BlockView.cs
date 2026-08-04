@@ -18,7 +18,7 @@ namespace Code.Scene.Block
         public SpriteAnimator.SpriteAnimator SpriteAnimator => _spriteAnimator;
         public UnityEvent<int, Vector2> OnSwiped { get; } = new();
         
-        private bool _isMoving;
+        private bool _isInputLock;
         
         private void Awake()
         {
@@ -37,10 +37,15 @@ namespace Code.Scene.Block
         {
             _spriteRenderer.sortingOrder = layer;
         }
+
+        public void SetInputLock(bool isLock)
+        {
+            _isInputLock = isLock;
+        }
         
         public async UniTask MoveToAsync(Vector3 targetPosition, float duration)
         {
-            _isMoving = true;
+            SetInputLock(true);
             
             var startPosition = transform.localPosition;
 
@@ -64,12 +69,12 @@ namespace Code.Scene.Block
             }
 
             transform.localPosition = targetPosition;
-            _isMoving = false;
+            SetInputLock(false);
         }
         
         private void OnInputDetectorSwiped(Vector2 eventArgs)
         {
-            if (_isMoving)
+            if (_isInputLock)
             {
                 return;
             }
