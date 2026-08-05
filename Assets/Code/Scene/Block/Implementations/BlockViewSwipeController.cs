@@ -1,6 +1,6 @@
 ﻿using Code.Logic.Blocks;
 using Code.Logic.Blocks.Contracts;
-using Code.Logic.Grids;
+using Code.Scene.Block.Config;
 using Code.Scene.Block.Contracts;
 using Code.Scene.Config;
 using Code.Scene.Core.Contracts;
@@ -12,37 +12,39 @@ namespace Code.Scene.Block.Implementations
     public class BlockViewSwipeController : IBlockViewSwipeController
     {
         private readonly InputSwipeConfig _inputSwipeConfig;
-        private readonly IBlockMovementService _blockMovementService;
+        private readonly BlockViewsConfig _blockViewsConfig;
+        
         private readonly IBlockViewsRegistry _blockViewsRegistry;
+        private readonly IBlockMovementService _blockMovementService;
         private readonly IBlockViewMovementService _blockViewMovementService;
-        private readonly BlockViewMatchController _blockViewMatchController;
+        
+        private readonly LevelMatchController _levelMatchController;
+        
         private readonly ICancellationTokenService _cancellationTokenService;
         
         [Inject]
-        public BlockViewSwipeController(InputSwipeConfig inputSwipeConfig, IBlockMovementService blockMovementService, 
-            IBlockViewsRegistry blockViewsRegistry, IBlockViewLayerService blockViewLayerService, 
-            IBlockViewMovementService blockViewMovementService, BlockViewMatchController blockViewMatchController,
-            GridModel gridModel, ICancellationTokenService cancellationTokenService)
+        public BlockViewSwipeController(BlockViewsConfig blockViewsConfig, InputSwipeConfig inputSwipeConfig, IBlockMovementService blockMovementService, 
+            IBlockViewsRegistry blockViewsRegistry, IBlockViewMovementService blockViewMovementService, LevelMatchController levelMatchController,
+            ICancellationTokenService cancellationTokenService)
         {
             _inputSwipeConfig = inputSwipeConfig;
+            _blockViewsConfig = blockViewsConfig;
             _blockMovementService = blockMovementService;
             _blockViewsRegistry = blockViewsRegistry;
             _blockViewMovementService = blockViewMovementService;
-            _blockViewMatchController = blockViewMatchController;
+            _levelMatchController = levelMatchController;
             _cancellationTokenService = cancellationTokenService;
         }
         
-        public void BindToBlockSwipeDetection(BlockView blockView)
+        public void BindToBlockViewSwipeDetection(BlockView blockView)
         {
-            blockView.InputSwipeDetector.Initialize(_inputSwipeConfig.MinSwipeDetectDistance, _inputSwipeConfig.MaxSwipeDetectDistance);
+            blockView.InitializeSwipeDetector(_inputSwipeConfig.MinSwipeDetectDistance, _inputSwipeConfig.MaxSwipeDetectDistance);
             blockView.OnSwiped.AddListener(OnSwiped);
         }
 
-        public void UnsubscribeFromAllBlockSwipes()
+        public void UnsubscribeFromAllBlockViewSwipes()
         {
-            var blockViews = _blockViewsRegistry.GetViewsAll();
-            
-            foreach (var blockView in blockViews)
+            foreach (var blockView in _blockViewsRegistry.GetViewsAll())
             {
                 blockView.OnSwiped.RemoveListener(OnSwiped);
             }
@@ -50,16 +52,17 @@ namespace Code.Scene.Block.Implementations
 
         private async void OnSwiped(int id, Vector2 swipeDirection)
         {
-            var swipeMovementResult = new BlockMovementData();
-            var movementDirection = BlockMovementDirectionHelper.GetNormalizedDirection(swipeDirection);
-            
-            if (!_blockMovementService.TryMove(new BlockID(id), movementDirection, swipeMovementResult))
+            var direction = BlockMovementDirectionHelper.GetNormalizedDirection(swipeDirection);
+            var movement = new BlockMovementData();
+
+            if (!_blockMovementService.TryMove(new BlockID(id), direction, movement))
             {
                 return;
             }
-            
-            await _blockViewMovementService.MoveAsync(swipeMovementResult, _cancellationTokenService.Token);
-            await _blockViewMatchController.MatchAsync(_cancellationTokenService.Token);
+
+            var cancellationToken = _cancellationTokenService.Token;
+            await _blockViewMovementService.MoveAsync(movement, _blockViewsConfig.SwipeSpeed, cancellationToken);
+            await _levelMatchController.MatchAsync(cancellationToken);
         }
     }
 }

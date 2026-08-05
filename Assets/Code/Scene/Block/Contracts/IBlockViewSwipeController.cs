@@ -2,7 +2,7 @@
 {
     public interface IBlockViewSwipeController
     {
-        void BindToBlockSwipeDetection(BlockView blockView);
-        void UnsubscribeFromAllBlockSwipes();
+        void BindToBlockViewSwipeDetection(BlockView blockView);
+        void UnsubscribeFromAllBlockViewSwipes();
     }
 }

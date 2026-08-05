@@ -59,6 +59,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85123620504b4443b0e6e87a95f67bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _inputSwipeDetector: {fileID: 1165753877775788872}
   _spriteAnimator: {fileID: 8722196370964422044}
   _spriteRenderer: {fileID: 1685251466476139465}
 --- !u!61 &5101735771008955547

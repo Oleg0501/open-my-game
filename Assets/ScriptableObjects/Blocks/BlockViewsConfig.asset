@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bdaf25cc5ca47af85386d81298b01f7, type: 3}
   m_Name: BlockViewsConfig
   m_EditorClassIdentifier: 
-  _levelFieldPrefab: {fileID: 1567466642258344803, guid: 1718d5f3adcee9f49b96bee0e16135af, type: 3}
+  _sceneRootPrefab: {fileID: 1567466642258344803, guid: 1718d5f3adcee9f49b96bee0e16135af, type: 3}
+  _swipeSpeed: 0.5
+  _dropSpeed: 0.4
   _viewConfigs:
   - _idConfig: {fileID: 11400000, guid: 152d24c53d7d02a489b6a7188f5e6d79, type: 2}
     _viewPrefab: {fileID: 8861714567125070106, guid: c33a5d5e02337804fac2ef3fb1e4a887, type: 3}

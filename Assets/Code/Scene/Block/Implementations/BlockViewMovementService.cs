@@ -2,6 +2,7 @@
 using System.Threading;
 using Code.Logic.Blocks;
 using Code.Logic.Grids;
+using Code.Scene.Block.Config;
 using Code.Scene.Block.Contracts;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Code.Scene.Block.Implementations
 {
     public class BlockViewMovementService : IBlockViewMovementService
     {
+        private readonly BlockViewsConfig _blockViewsConfig;
         private readonly GridModel _gridModel;
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly IBlockViewLayerService _blockViewLayerService;
@@ -23,7 +25,7 @@ namespace Code.Scene.Block.Implementations
             _blockViewLayerService = blockViewLayerService;
         }
         
-        public async UniTask MoveAsync(BlockMovementData blockMovementData, CancellationToken cancellationToken)
+        public async UniTask MoveAsync(BlockMovementData blockMovementData, float speed, CancellationToken cancellationToken)
         {
             var tasks = new List<UniTask>();
             var moves = blockMovementData.Movements;
@@ -38,7 +40,7 @@ namespace Code.Scene.Block.Implementations
                 var layer = _blockViewLayerService.GetLayerFromXY(move.ToPoint.x, move.ToPoint.y);
                 blockView.SetLayer(layer);
 
-                tasks.Add(blockView.MoveToAsync(target, 0.75f, cancellationToken));
+                tasks.Add(blockView.MoveToAsync(target, speed, cancellationToken));
             }
             
             await UniTask.WhenAll(tasks);

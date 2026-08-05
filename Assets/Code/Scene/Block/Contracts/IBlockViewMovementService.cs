@@ -6,6 +6,6 @@ namespace Code.Scene.Block.Contracts
 {
     public interface IBlockViewMovementService
     {
-        UniTask MoveAsync(BlockMovementData data, CancellationToken cancellationToken);
+        UniTask MoveAsync(BlockMovementData data, float speed, CancellationToken cancellationToken);
     }
 }

@@ -10,12 +10,12 @@ namespace Code.Scene.Block
     [RequireComponent(typeof(InputSwipeDetector))]
     public class BlockView : MonoBehaviour
     {
+        [SerializeField] private InputSwipeDetector _inputSwipeDetector;
         [SerializeField] private SpriteAnimator.SpriteAnimator _spriteAnimator;
         [SerializeField] private SpriteRenderer _spriteRenderer;
 
         public int ID { get; private set; }
         public string ConfigID { get; private set; }
-        public InputSwipeDetector InputSwipeDetector { get; private set; }
         public SpriteAnimator.SpriteAnimator SpriteAnimator => _spriteAnimator;
         public UnityEvent<int, Vector2> OnSwiped { get; } = new();
         
@@ -23,8 +23,7 @@ namespace Code.Scene.Block
         
         private void Awake()
         {
-            InputSwipeDetector = GetComponent<InputSwipeDetector>();
-            InputSwipeDetector.OnSwiped.AddListener(OnInputDetectorSwiped);
+            _inputSwipeDetector.OnSwiped.AddListener(OnInputDetectorSwiped);
         }
         
         public void Initialize(int id, string configId, int layer)
@@ -32,6 +31,11 @@ namespace Code.Scene.Block
             ID = id;
             ConfigID = configId;
             SetLayer(layer);
+        }
+
+        public void InitializeSwipeDetector(float minSwipeDistance, float maxSwipeDistance)
+        {
+            _inputSwipeDetector.Initialize(minSwipeDistance, maxSwipeDistance);
         }
 
         public void SetLayer(int layer)

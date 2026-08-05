@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225f17259bb846baad32c92713654895, type: 3}
   m_Name: InputSwipeConfig
   m_EditorClassIdentifier: 
-  _minSwipeDetectDistance: 1000
-  _maxSwipeDetectDistance: 75000
+  _minSwipeDetectDistance: 500
+  _maxSwipeDetectDistance: 100000

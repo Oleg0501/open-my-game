@@ -1,4 +1,5 @@
 ﻿using Code.Scene.Balloon;
+using Code.Scene.Block;
 using Code.Scene.Block.Implementations;
 using Code.Scene.Core;
 using Code.Scene.Core.Implementations;
@@ -18,7 +19,7 @@ namespace Code.Scene.Installers
             Container.Bind<Camera>().WithId(typeof(CameraInjectID)).FromInstance(_camera).AsSingle().NonLazy();
             Container.Bind<SpriteAnimatorSystem>().FromInstance(_spriteAnimatorSystem).AsSingle().NonLazy();
             
-            Container.Bind<BlockViewController>().AsSingle().NonLazy();
+            Container.Bind<LevelController>().AsSingle().NonLazy();
             Container.Bind<BalloonViewController>().AsSingle().NonLazy();
             
             Container.BindInterfacesAndSelfTo<CancellationTokenService>().AsSingle().NonLazy();
@@ -26,7 +27,7 @@ namespace Code.Scene.Installers
             
             Container.BindInterfacesAndSelfTo<BlockViewsRegistry>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewSwipeController>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<BlockViewMatchController>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<LevelMatchController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewsScaleService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewLayerService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewMovementService>().AsSingle().NonLazy();
