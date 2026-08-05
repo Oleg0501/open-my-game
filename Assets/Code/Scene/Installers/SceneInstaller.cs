@@ -20,12 +20,15 @@ namespace Code.Scene.Installers
             
             Container.Bind<BlockViewController>().AsSingle().NonLazy();
             Container.Bind<BalloonViewController>().AsSingle().NonLazy();
+            
+            Container.BindInterfacesAndSelfTo<CancellationTokenService>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TickableRegistry>().AsSingle().NonLazy();
+            
             Container.BindInterfacesAndSelfTo<BlockViewsRegistry>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewSwipeController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewMatchController>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewsScaleService>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewLayerService>().AsSingle().NonLazy();
-            Container.BindInterfacesAndSelfTo<TickableRegistry>().AsSingle().NonLazy();
             Container.BindInterfacesAndSelfTo<BlockViewMovementService>().AsSingle().NonLazy();
         }
     }

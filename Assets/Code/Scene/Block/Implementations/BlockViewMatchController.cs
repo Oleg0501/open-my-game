@@ -1,12 +1,13 @@
 using System.Collections.Generic;
+using System.Threading;
 using Code.Logic.Blocks;
 using Code.Logic.Blocks.Contracts;
 using Code.Scene.Block.Config;
 using Code.Scene.Block.Contracts;
 using Code.Scene.Core.Contracts;
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Code.Scene.Block.Implementations
 {
@@ -20,7 +21,7 @@ namespace Code.Scene.Block.Implementations
         private readonly IBlockViewsRegistry _blockViewsRegistry;
         private readonly ITickableRegistry _tickableRegistry;
         private readonly BlockViewsConfigRepository _blockViewsConfigRepository;
-
+        
         [Inject]
         public BlockViewMatchController(IBlockDropService blockDropService, IBlockViewMovementService blockViewMovementService, 
             IBlockMatchFinder blockMatchFinder, IBlockMatchDestroyer blockMatchDestroyer, IBlockRegistry blockRegistry, 
@@ -37,14 +38,14 @@ namespace Code.Scene.Block.Implementations
             _blockViewsConfigRepository = blockViewsConfigRepository;
         }
         
-        public async UniTask MatchAsync()
+        public async UniTask MatchAsync(CancellationToken cancellationToken)
         {
             while (true)
             {
                 var blockMovementResult = new BlockMovementData();
                 _blockDropService.Drop(blockMovementResult);
                 
-                await _blockViewMovementService.MoveAsync(blockMovementResult);
+                await _blockViewMovementService.MoveAsync(blockMovementResult, cancellationToken);
 
                 var matches = _blockMatchFinder.FindMatches();
 
@@ -54,11 +55,11 @@ namespace Code.Scene.Block.Implementations
                 }
                 
                 _blockMatchDestroyer.DestroyBlocks(matches);
-                await SynchronizeBlockViews();
+                await SynchronizeBlockViews(cancellationToken);
             }
         }
         
-        public async UniTask SynchronizeBlockViews()
+        public async UniTask SynchronizeBlockViews(CancellationToken cancellationToken)
         {
             var allViews = _blockViewsRegistry.GetViewsAll();
             var syncViews = new List<BlockView>();
@@ -82,13 +83,18 @@ namespace Code.Scene.Block.Implementations
                 view.SetInputLock(true);
                 
                 var viewConfig = _blockViewsConfigRepository.Get(view.ConfigID);
-                tasks.Add(view.SpriteAnimator.PlayAndWaitAsync(viewConfig.AnimationsConfig.DestroyAnimationConfig));
+                tasks.Add(view.SpriteAnimator.PlayAndWaitAsync(viewConfig.AnimationsConfig.DestroyAnimationConfig, cancellationToken));
             }
             
             await UniTask.WhenAll(tasks);
         
             foreach (var view in syncViews)
             {
+                if (!view)
+                {
+                    continue;
+                }
+                
                 _blockViewsRegistry.Unregister(new BlockID(view.ID));
                 _tickableRegistry.Unregister(view.ID);
                 Object.Destroy(view.gameObject);

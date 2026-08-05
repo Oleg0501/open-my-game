@@ -15,7 +15,7 @@ namespace Code.Logic.Grids
     {
         protected override string SaveKey => "GridStorage";
         
-        public EventHandler<Dictionary<Vector2Int, GridCell>> OnGridGenerated =  delegate { };
+        public EventHandler OnGridGenerated =  delegate { };
         public Dictionary<Vector2Int, GridCell> Cells { get; } = new();
         
         public int Width { get; private set; }
@@ -67,7 +67,7 @@ namespace Code.Logic.Grids
                 }
             }
             
-            OnGridGenerated?.Invoke(this, Cells);
+            OnGridGenerated?.Invoke(this, EventArgs.Empty);
             
             if (Data != null)
             {

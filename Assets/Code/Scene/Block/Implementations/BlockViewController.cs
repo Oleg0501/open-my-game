@@ -1,11 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using Code.Logic.Grids;
 using Code.Scene.Block.Config;
 using Code.Scene.Block.Contracts;
+using Code.Scene.Core;
 using Code.Scene.Core.Contracts;
+using Code.Scene.Core.Implementations;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
 
 namespace Code.Scene.Block.Implementations
 {
@@ -20,13 +23,15 @@ namespace Code.Scene.Block.Implementations
         private readonly IBlockViewLayerService _blockViewLayerService;
         private readonly GridModel _gridModel;
         private readonly IBlockViewSwipeController _blockViewSwipeController;
-        
+        private readonly ICancellationTokenService _cancellationTokenService;
+
         private Transform _gameFieldTransform;
         
         [Inject]
         public BlockViewController(DiContainer diContainer, BlockViewsConfig viewsConfig, BlockViewsConfigRepository configRepository,
             IBlockViewsRegistry blockViewsRegistry, ITickableRegistry tickableRegistry, IBlockViewsScaleService blockViewsScaleService, 
-            IBlockViewLayerService blockViewLayerService, GridModel gridModel, IBlockViewSwipeController blockViewSwipeController)
+            IBlockViewLayerService blockViewLayerService, GridModel gridModel, IBlockViewSwipeController blockViewSwipeController,
+            ICancellationTokenService cancellationTokenService)
         {
             _diContainer = diContainer;
             _viewsConfig = viewsConfig;
@@ -37,6 +42,7 @@ namespace Code.Scene.Block.Implementations
             _blockViewLayerService = blockViewLayerService;
             _gridModel = gridModel;
             _blockViewSwipeController = blockViewSwipeController;
+            _cancellationTokenService = cancellationTokenService;
 
             gridModel.OnGridGenerated += OnGridGenerated;
         }
@@ -94,8 +100,11 @@ namespace Code.Scene.Block.Implementations
             }
         }
         
-        private void OnGridGenerated(object sender, Dictionary<Vector2Int, GridCell> eventArgs)
+        private void OnGridGenerated(object sender, EventArgs eventArgs)
         {
+            _cancellationTokenService.Cancel();
+            _cancellationTokenService.Reset();
+            
             CreateBlockViews();
         }
     }

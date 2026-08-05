@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Threading;
 using Code.Logic.Blocks;
 using Code.Logic.Grids;
 using Code.Scene.Block.Contracts;
@@ -23,7 +23,7 @@ namespace Code.Scene.Block.Implementations
             _blockViewLayerService = blockViewLayerService;
         }
         
-        public async UniTask MoveAsync(BlockMovementData blockMovementData)
+        public async UniTask MoveAsync(BlockMovementData blockMovementData, CancellationToken cancellationToken)
         {
             var tasks = new List<UniTask>();
             var moves = blockMovementData.Movements;
@@ -38,7 +38,7 @@ namespace Code.Scene.Block.Implementations
                 var layer = _blockViewLayerService.GetLayerFromXY(move.ToPoint.x, move.ToPoint.y);
                 blockView.SetLayer(layer);
 
-                tasks.Add(blockView.MoveToAsync(target, 0.75f));
+                tasks.Add(blockView.MoveToAsync(target, 0.75f, cancellationToken));
             }
             
             await UniTask.WhenAll(tasks);

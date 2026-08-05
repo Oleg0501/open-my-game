@@ -104,7 +104,7 @@ namespace Code.Scene.Balloon
             Object.Destroy(view.gameObject);
         }
         
-        private void OnGridGenerated(object sender, Dictionary<Vector2Int, GridCell> eventArgs)
+        private void OnGridGenerated(object sender, EventArgs eventArgs)
         {
             Start();
         }

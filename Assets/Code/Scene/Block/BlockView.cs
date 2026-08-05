@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
 using Code.Scene.SwipeDetector;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
@@ -43,7 +44,7 @@ namespace Code.Scene.Block
             _isInputLock = isLock;
         }
         
-        public async UniTask MoveToAsync(Vector3 targetPosition, float duration)
+        public async UniTask MoveToAsync(Vector3 targetPosition, float duration, CancellationToken cancellationToken)
         {
             SetInputLock(true);
             
@@ -58,18 +59,24 @@ namespace Code.Scene.Block
 
             var elapsed = 0f;
 
-            while (elapsed < duration)
+            try
             {
-                elapsed += Time.deltaTime;
-                var t = Mathf.Clamp01(elapsed / duration);
+                while (elapsed < duration)
+                {
+                    elapsed += Time.deltaTime;
+                    var t = Mathf.Clamp01(elapsed / duration);
 
-                transform.localPosition = Vector3.Lerp(startPosition, targetPosition, t);
+                    transform.localPosition = Vector3.Lerp(startPosition, targetPosition, t);
 
-                await Task.Yield();
+                    await UniTask.Yield(cancellationToken);
+                }
+
+                transform.localPosition = targetPosition;
+                SetInputLock(false);
             }
-
-            transform.localPosition = targetPosition;
-            SetInputLock(false);
+            catch (OperationCanceledException exception)
+            {
+            }
         }
         
         private void OnInputDetectorSwiped(Vector2 eventArgs)

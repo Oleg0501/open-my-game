@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using Code.Scene.Config;
 using Code.Scene.Core.Contracts;
 using Cysharp.Threading.Tasks;
@@ -34,7 +36,7 @@ namespace Code.Scene.SpriteAnimator
             _frame = 0;
         }
 
-        public async UniTask PlayAndWaitAsync(SpriteAnimationConfig config)
+        public async UniTask PlayAndWaitAsync(SpriteAnimationConfig config, CancellationToken cancellationToken)
         {
             if (config.IsLoop)
             {
@@ -43,8 +45,14 @@ namespace Code.Scene.SpriteAnimator
             
             Play(config);
             _taskCompletionSource = new TaskCompletionSource<bool>();
-            
-            await _taskCompletionSource.Task;
+
+            try
+            {
+                await UniTask.WaitUntil(() => _taskCompletionSource.Task.IsCompleted, cancellationToken: cancellationToken);
+            }
+            catch (OperationCanceledException exception)
+            {
+            }
         }
         
         public void Tick(float deltaTime)
